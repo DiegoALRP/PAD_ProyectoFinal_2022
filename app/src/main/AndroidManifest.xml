@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="es.ucm.fdi.emtnt">
+    package="es.ucm.fdi.emtntr">
 
     <application
         android:allowBackup="true"
@@ -8,20 +8,22 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EMTnt">
-        <activity android:name=".MainActivity" android:exported="true">
+        android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBYZ44izBq1Qs24PaFCnudAxxmRNc453Fo" />
+
+        <activity
+            android:name=".Nav_Activity"
+            android:label="@string/title_activity_nav_" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".firebase.LogIn"
-            android:exported="false" />
-        <activity
-            android:name=".firebase.SignUp"
-            android:exported="false" />
     </application>
 
 </manifest>

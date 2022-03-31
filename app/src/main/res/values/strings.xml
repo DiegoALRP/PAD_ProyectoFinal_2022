@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">EMT\'nt</string>
+    <string name="app_name">EmtntR</string>
+    <string name="title_activity_nav_">Nav_Activity</string>
+    <string name="title_home">Buscar</string>
+    <string name="title_dashboard">Paradas</string>
+    <string name="title_notifications">Mapa</string>
 </resources>
