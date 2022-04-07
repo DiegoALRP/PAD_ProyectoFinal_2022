@@ -37,7 +37,7 @@ public class LogIn extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         if (userIsLoggedIn()){
-            reload();
+            //reload();
         }
 
         email_input = findViewById(R.id.email_input_text_field);
@@ -103,7 +103,8 @@ public class LogIn extends AppCompatActivity {
 
     //Reloads the page or starts a new activity
     private void reload() {
-
+        Intent intent = new Intent(this, Nav_Activity.class);
+        startActivity(intent);
     }
 
     private void goToMain() {

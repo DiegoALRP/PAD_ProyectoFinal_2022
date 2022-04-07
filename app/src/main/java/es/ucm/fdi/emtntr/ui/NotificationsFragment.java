@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -51,43 +52,55 @@ public class NotificationsFragment extends Fragment implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
         //Fragments no pueden pedir System Service, por eso el getActivity
         locationManager = (LocationManager) getActivity().getSystemService(getContext().LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+
         return root;
     }
 
     @Override
+    @SuppressLint("MissingPermission")
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if(location!=null)
+        {
+            locationManager.removeUpdates(this);
+            LatLng pos = new LatLng(location.getLatitude(), location.getLongitude());
+            mostrarParadas(pos);
+            locationManager = (LocationManager) getActivity().getSystemService(getContext().LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+
+
+        }
     }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
         float acc = location.getAccuracy();
-        while(acc<30) acc = location.getAccuracy();
-        LatLng pos = new LatLng(location.getLatitude(), location.getLongitude());
-        mMap.addMarker(new MarkerOptions()
-                .position(pos)
-                .title("position"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
-        mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
-        mostrarParadas(pos);
-        locationManager.removeUpdates(this);
+        Toast.makeText(getContext(), String.valueOf(acc), Toast.LENGTH_SHORT).show();
+        if(acc>1) {
+            LatLng pos = new LatLng(location.getLatitude(), location.getLongitude());
+
+            mostrarParadas(pos);
+        }
     }
 
     public void mostrarParadas(LatLng pos)
     {
+
+        mMap.addMarker(new MarkerOptions()
+                .position(pos)
+                .title("position"));
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(pos, 17);
+
+        mMap.animateCamera(cameraUpdate);
+
         List<LatLng> paradas = new ArrayList<LatLng>();
         //Prueba
         for (int i = 0; i<5; i++) paradas.add(new LatLng(pos.latitude + Math.random()/1000 , pos.longitude+ Math.random()/1000));
