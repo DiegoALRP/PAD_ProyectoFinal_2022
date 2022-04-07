@@ -14,6 +14,8 @@ import android.widget.Button;
 
 import com.google.android.gms.maps.SupportMapFragment;
 
+import es.ucm.fdi.emtntr.firebase.LogIn;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button log;
@@ -27,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
         }
-
     }
 
     public void login(View view){
-        Intent intent = new Intent(this, Nav_Activity.class);
-        startActivity(intent);
+
+        Intent intentLogin = new Intent(this, LogIn.class);
+        startActivity(intentLogin);
+        //Intent intent = new Intent(this, Nav_Activity.class);
+        //startActivity(intent);
     }
 }

@@ -20,6 +20,13 @@
             android:value="AIzaSyBYZ44izBq1Qs24PaFCnudAxxmRNc453Fo" />
 
         <activity
+            android:name=".firebase.LogIn"
+            android:exported="true" />
+        <activity
+            android:name=".firebase.SignUp"
+            android:exported="true" />
+
+        <activity
             android:name=".Nav_Activity"
             android:label="@string/title_activity_nav_" />
         <activity android:name=".MainActivity" android:exported="true">
