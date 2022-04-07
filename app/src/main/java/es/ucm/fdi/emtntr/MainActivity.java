@@ -13,8 +13,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.gson.Gson;
 
 import es.ucm.fdi.emtntr.firebase.LogIn;
+import es.ucm.fdi.emtntr.model.BusStop;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +31,17 @@ public class MainActivity extends AppCompatActivity {
 
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
         }
+
+        /*Gson gson = new Gson();
+        BusStop busStop = new BusStop();
+        busStop.setBusStopDirection("Dir");
+        busStop.setBusStopName("pedr");
+
+        String json = gson.toJson(busStop);
+
+        BusStop busStop1 = gson.fromJson(json, BusStop.class);
+
+        int p;*/
     }
 
     public void login(View view){
