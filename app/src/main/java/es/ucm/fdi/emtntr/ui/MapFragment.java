@@ -2,9 +2,11 @@ package es.ucm.fdi.emtntr.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,9 @@ import com.google.android.gms.maps.model.Marker;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import es.ucm.fdi.emtntr.Nav_Activity;
 import es.ucm.fdi.emtntr.R;
 import es.ucm.fdi.emtntr.model.MapController;
@@ -40,12 +45,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
+        //Inicialización del mapa en el fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //Fragments no pueden pedir System Service, por eso el getActivity
+        //locationManager irá actualizando las localizaciones mediante gps, que serán recibidas en onLocationChanged()
         locationManager = (LocationManager) getActivity().getSystemService(getContext().LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, this);
 
         return root;
     }
@@ -58,26 +64,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
         mapController = new MapController(googleMap, this);
 
+        //Pide la ultima localizacion disponible (puede ser erronea o no haber ninguna)
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if(location!=null)
-        {
-            locationManager.removeUpdates(this);
-            LatLng pos = new LatLng(location.getLatitude(), location.getLongitude());
-            mapController.mostrarUbicacion(pos);
-            mapController.mostrarParadas(pos);
-            locationManager = (LocationManager) getActivity().getSystemService(getContext().LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+        if(location!=null) onLocationChanged(location);
 
+        //Si el internet esta activo, pide una localizacion instantanea
+        Criteria criteria = new Criteria();
+        if (isInternetAvailable()) {
+            criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+            locationManager.requestSingleUpdate(criteria, this, null);
         }
+
     }
 
+    //La localización cambia
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
             LatLng pos = new LatLng(location.getLatitude(), location.getLongitude());
             mapController.mostrarUbicacion(pos);
+            mapController.mostrarParadas(pos);
     }
 
+    //Se pulsa la iformación de un marcador (marcadores creados en el MapController)
     @Override
     public void onInfoWindowClick(@NonNull @NotNull Marker marker) {
 
@@ -89,5 +98,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
         transaction.commit();
 
+    }
+
+    //Comprueba si hay acceso a internet
+    public boolean isInternetAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(getContext().CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 }
