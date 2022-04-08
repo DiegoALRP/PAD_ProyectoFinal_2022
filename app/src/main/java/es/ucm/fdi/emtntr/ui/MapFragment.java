@@ -94,7 +94,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true);
 
-        transaction.replace(R.id.nav_host_fragment, StopFragment.class, null);
+        transaction.replace(R.id.nav_host_fragment, StopFragment.newInstance("A1", "B1"), null);
 
         transaction.commit();
 
