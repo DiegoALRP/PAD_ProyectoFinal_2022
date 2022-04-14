@@ -1,95 +1,83 @@
 package es.ucm.fdi.emtntr.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class BusStop {
 
-    String busStopID;
-    String busStopName;
-    HashMap<Integer, String> busesID;
-    String headerA;
-    String headerB;
-    String busStopDirection;
-    String line;
-    String minFrequency;
-    String maxFrequency;
+    private final String id;
+    private final String name;
+    private final LatLng coords;
 
-    public BusStop() {
-
+    private BusStop(String id, String name, LatLng coords) {
+        this.id = id;
+        this.name = name;
+        this.coords = coords;
     }
 
+    public static BusStop fromDetails(JSONObject json) throws JSONException {
+        JSONArray coords = json.getJSONObject("geometry").getJSONArray("coordinates");
 
-    public String getBusStopName() {
-        return busStopName;
+        String id = json.getString("stop");
+        String name = json.getString("name");
+        LatLng ll = new LatLng(coords.getDouble(1), coords.getDouble(0));
+        BusStop stop = new BusStop(id, name, ll);
+        return stop;
     }
 
-    public void setBusStopName(String busStopName) {
-        this.busStopName = busStopName;
-    }
+    public static List<BusStop> fromNear(JSONArray json) throws JSONException {
+        List<BusStop> list = new ArrayList<>();
 
-    public String getBusesID(int id) {
-        return busesID.get(id);
-    }
-
-    public void setBusesID(ArrayList<String> busesID) {
-        //this.busesID = busesID;
-    }
-
-    public String getHeaderA() {
-        return headerA;
-    }
-
-    public void setHeaderA(String headerA) {
-        this.headerA = headerA;
-    }
-
-    public String getHeaderB() {
-        return headerB;
-    }
-
-    public void setHeaderB(String headerB) {
-        this.headerB = headerB;
-    }
-
-    public String getBusStopDirection() {
-        return busStopDirection;
-    }
-
-    public void setBusStopDirection(String busStopDirection) {
-        this.busStopDirection = busStopDirection;
-    }
-
-    public String getLine() {
-        return line;
-    }
-
-    public void setLine(String line) {
-        this.line = line;
-    }
-
-    public String getMinFrequency() {
-        return minFrequency;
-    }
-
-    public void setMinFrequency(String minFrequency) {
-        this.minFrequency = minFrequency;
-    }
-
-    public String getMaxFrequency() {
-        return maxFrequency;
-    }
-
-    public void setMaxFrequency(String maxFrequency) {
-        this.maxFrequency = maxFrequency;
-    }
-
-    public String getDirectionName() {
-        if (busStopDirection.equals("A")) {
-            return headerA;
+        for (int i = 0; i < json.length(); i++) {
+            list.add(fromDetails(json.getJSONObject(i)));
         }
-        else {
-            return headerB;
+        return list;
+    }
+
+    public static BusStop fromArrive(JSONObject json) throws JSONException {
+        JSONArray coords = json.getJSONObject("geometry").getJSONArray("coordinates");
+
+        String id = json.getString("stop");
+        String name = json.getString("name");
+        LatLng ll = new LatLng(coords.getDouble(1), coords.getDouble(0));
+        BusStop stop = new BusStop(id, name, ll);
+        return stop;
+    }
+
+    public static List<BusStop> fromBasicList(JSONArray json) throws JSONException {
+        List<BusStop> list = new ArrayList<>();
+
+        for (int i = 0; i < json.length(); i++) {
+            list.add(fromBasic(json.getJSONObject(i)));
         }
+        return list;
+    }
+
+    public static BusStop fromBasic(JSONObject json) throws JSONException {
+        JSONArray coords = json.getJSONObject("geometry").getJSONArray("coordinates");
+
+        String id = json.getString("node");
+        String name = json.getString("name");
+        LatLng ll = new LatLng(coords.getDouble(1), coords.getDouble(0));
+        BusStop stop = new BusStop(id, name, ll);
+        return stop;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LatLng getCoords() {
+        return coords;
     }
 }
