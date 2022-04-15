@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.ucm.fdi.emtntr.Nav_Activity;
 import es.ucm.fdi.emtntr.R;
 
 public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResultListAdapter.BusStopViewHolder> implements View.OnClickListener{
@@ -40,7 +39,7 @@ public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResult
     @Override
     public BusStopResultListAdapter.BusStopViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
 
-        View itemView = mInflater.inflate(R.layout.card_view_2, parent, false);
+        View itemView = mInflater.inflate(R.layout.layout_for_card_view_bus_stops_search, parent, false);
 
         return new BusStopViewHolder(itemView, this);
     }
