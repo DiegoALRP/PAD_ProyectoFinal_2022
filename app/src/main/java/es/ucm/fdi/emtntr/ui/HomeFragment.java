@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class HomeFragment extends Fragment {
     private BusStopLoaderCallBacks busStopLoaderCallBacks;
     private BusStopResultListAdapter busStopResultListAdapter;
     private RecyclerView recyclerView_busStopsList;
+    private SearchView searchView;
     private View view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,6 +56,26 @@ public class HomeFragment extends Fragment {
         recyclerView_busStopsList.setAdapter(busStopResultListAdapter);
         recyclerView_busStopsList.setLayoutManager(new LinearLayoutManager(root.getContext()));
 
+        searchView = (SearchView) root.findViewById(R.id.search_home_searchView);
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.onActionViewExpanded();
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //TODO
+                return false;
+            }
+        });
+
         //searchBusStops(root);
         view = root;
 
@@ -70,16 +92,6 @@ public class HomeFragment extends Fragment {
 
     public void searchBusStops(View view) {
 
-        /*ArrayList<BusStopInfo> arrayList = new ArrayList<>();
-        ArrayList<String> stringArrayList = new ArrayList<>();
-        stringArrayList.add("a");
-        stringArrayList.add("b");
-        for (int i = 0; i < 5; i++) {
-
-            arrayList.add(new BusStopInfo(String.valueOf(i), "name", stringArrayList));
-        }
-
-        updateBusStopResultList(arrayList);*/
         Bundle queryBundle = new Bundle();
         LoaderManager.getInstance(this).restartLoader(0, queryBundle, busStopLoaderCallBacks);
     }

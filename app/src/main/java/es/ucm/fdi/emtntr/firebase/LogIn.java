@@ -1,5 +1,6 @@
 package es.ucm.fdi.emtntr.firebase;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +9,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,9 +20,18 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import es.ucm.fdi.emtntr.Nav_Activity;
 import es.ucm.fdi.emtntr.R;
+import es.ucm.fdi.emtntr.firebase.loadData.LoadBusStopInfoLoader;
+import es.ucm.fdi.emtntr.internalStorage.WriteIE;
+import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
 
 public class LogIn extends AppCompatActivity {
 
@@ -27,7 +40,10 @@ public class LogIn extends AppCompatActivity {
     private TextInputEditText email_input;
     private TextInputEditText password_input;
 
+    private BusStopLoaderCallBacks busStopLoaderCallBacks;
+
     private final String TAG = "AuthEmailAndPassword";
+    private final String filename = "BusStopInfo.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +52,13 @@ public class LogIn extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        busStopLoaderCallBacks = new BusStopLoaderCallBacks(this);
+        Bundle queryBundle = new Bundle();
+        //getLoaderManager().restartLoader(1, queryBundle, busStopLoaderCallBacks);
+        LoaderManager.getInstance(this).restartLoader(0, queryBundle, busStopLoaderCallBacks);
+
         if (userIsLoggedIn()){
-            reload();
+            //reload();
         }
 
         email_input = findViewById(R.id.email_input_text_field);
@@ -110,5 +131,48 @@ public class LogIn extends AppCompatActivity {
     private void goToMain() {
         Intent intent = new Intent(this, Nav_Activity.class);
         startActivity(intent);
+    }
+
+    public void writeInInternalStorage(List<BusStopInfo> busStopInfos) {
+
+        List<BusStopInfo> busStopInfos1 = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            busStopInfos1.add(busStopInfos.get(i));
+        }
+        Gson gson = new Gson();
+        String data = gson.toJson(busStopInfos1);
+
+        WriteIE writeIE = new WriteIE();
+        writeIE.write(getApplicationContext(), filename, data);
+    }
+
+    class BusStopLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStopInfo>> {
+
+        private Context context;
+
+        public BusStopLoaderCallBacks(Context context) {
+            this.context = context;
+        }
+
+        @NonNull
+        @NotNull
+        @Override
+        public LoadBusStopInfoLoader onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
+
+            LoadBusStopInfoLoader busStopLoader = new LoadBusStopInfoLoader(context);
+
+            return busStopLoader;
+        }
+
+        @Override
+        public void onLoadFinished(@NonNull @NotNull Loader<List<BusStopInfo>> loader, List<BusStopInfo> data) {
+
+            writeInInternalStorage(data);
+        }
+
+        @Override
+        public void onLoaderReset(@NonNull @NotNull Loader<List<BusStopInfo>> loader) {
+
+        }
     }
 }
