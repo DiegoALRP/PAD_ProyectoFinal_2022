@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 //TODO
+                busStopResultListAdapter.getFilter().filter(newText);
                 return false;
             }
         });
@@ -117,7 +118,7 @@ public class HomeFragment extends Fragment {
         @Override
         public void onLoadFinished(@NonNull @NotNull Loader<List<BusStopInfo>> loader, List<BusStopInfo> data) {
 
-            if (data.size() < 20) {
+            /*if (data.size() < 20) {
                 updateBusStopResultList(data);
             }
             else {
@@ -126,7 +127,8 @@ public class HomeFragment extends Fragment {
                     busStopInfos.add(data.get(i));
                 }
                 updateBusStopResultList(busStopInfos);
-            }
+            }*/
+            updateBusStopResultList(data);
         }
 
         @Override
