@@ -32,7 +32,7 @@ public class Notification extends BroadcastReceiver {
         //TODO
         //builder.setSmallIcon(icon)
         builder.setContentTitle("Bus is coming!!!");
-        builder.setContentText(bus.getBusesID(busID)+" "+bus.getDirectionName());
+        //TODO ADD: builder.setContentText(bus.getBusesID(busID)+" "+bus.getDirectionName());
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }
 

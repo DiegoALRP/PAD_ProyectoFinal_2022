@@ -15,7 +15,7 @@ public class BusStop {
     private final String name;
     private final LatLng coords;
 
-    private BusStop(String id, String name, LatLng coords) {
+    public BusStop(String id, String name, LatLng coords) {
         this.id = id;
         this.name = name;
         this.coords = coords;

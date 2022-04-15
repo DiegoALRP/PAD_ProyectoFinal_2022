@@ -1,5 +1,11 @@
 package es.ucm.fdi.emtntr.emt;
 
+import android.util.Log;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,8 +16,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +27,7 @@ import java.util.StringJoiner;
 
 import es.ucm.fdi.emtntr.model.BusStop;
 import es.ucm.fdi.emtntr.model.StopArrivals;
+import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
 
 public class EMTApi {
 
@@ -32,6 +41,10 @@ public class EMTApi {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public EMTApi() {
+        token = "cd56c60e-5c55-11ea-83c4-02dc460b89d8";
     }
 
     private String buildPath(String... args) {
@@ -178,5 +191,42 @@ public class EMTApi {
         } else {
             return new Response<>(res.getCode(), res.getMessage());
         }
+    }
+
+    public List<BusStopInfo> getBusStopsList() throws JSONException {
+        Response<JSONArray> res = apiCall(buildPath("transport/busemtmad/stops/list"), "");
+        List<BusStopInfo> busStopInfoList = new ArrayList<BusStopInfo>();
+
+        if (res.getCode().equals("00")) {
+
+            JSONArray jsonArray = res.getData();
+            Gson gson = new Gson();
+            ArrayList<LinkedTreeMap<String, Object>> busStopList = gson.fromJson(String.valueOf(jsonArray), ArrayList.class);
+            for (LinkedTreeMap<String, Object> busStop: busStopList) {
+
+                String busStopID = String.valueOf(busStop.get("node"));
+                String busStopName = String.valueOf(busStop.get("name"));
+                ArrayList<String> lines = (ArrayList<String>) busStop.get("lines");
+                for (int i = 0; i < lines.size(); i++) {
+
+                    String line = lines.get(i);
+                    String[] valid = line.split("/");
+                    line = valid[0];
+                    lines.set(i, line);
+                }
+
+                LinkedTreeMap<String, ArrayList<Double>> geo = (LinkedTreeMap<String, ArrayList<Double>>) busStop.get("geometry");
+                ArrayList<Double> coordinates = geo.get("coordinates");
+                LatLng latLng = new LatLng(coordinates.get(0), coordinates.get(1));
+
+                BusStopInfo busStopInfo = new BusStopInfo(busStopID, busStopName, lines, latLng);
+
+                busStopInfoList.add(busStopInfo);
+            }
+        } else {
+            return busStopInfoList;
+        }
+
+        return busStopInfoList;
     }
 }

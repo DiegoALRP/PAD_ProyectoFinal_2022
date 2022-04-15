@@ -37,7 +37,7 @@ public class LogIn extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         if (userIsLoggedIn()){
-            //reload();
+            reload();
         }
 
         email_input = findViewById(R.id.email_input_text_field);

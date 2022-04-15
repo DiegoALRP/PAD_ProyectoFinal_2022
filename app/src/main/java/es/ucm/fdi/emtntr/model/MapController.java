@@ -33,11 +33,11 @@ public class MapController  {
         List<BusStop> paradasPrueba = new ArrayList<BusStop>();
         for (int i = 0; i<5; i++)
         {
-            BusStop b= new BusStop();
+            /*BusStop b= new BusStop();
             b.setPosition(new LatLng(pos.latitude + Math.random()/1000 , pos.longitude+ Math.random()/1000));
             b.setBusStopName("parada " + i);
             b.setBusStopID("0000" + i);
-            paradasPrueba.add(b);
+            paradasPrueba.add(b);*/
         }
         /////////////////////////////////////////////////////////////////////
 
@@ -45,11 +45,11 @@ public class MapController  {
 
         for(BusStop b: paradasPrueba)
         {
-            marcadores.add(mMap.addMarker(new MarkerOptions()
+            /*marcadores.add(mMap.addMarker(new MarkerOptions()
                     .position(b.getPosition())
                     .title(b.getBusStopName())
                     .snippet("numero: " + b.getBusStopID())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bus))));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bus))));*/
         }
     }
     public void mostrarUbicacion(LatLng pos)
