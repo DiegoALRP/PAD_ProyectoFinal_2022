@@ -13,24 +13,24 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
+import es.ucm.fdi.emtntr.model.BusStop;
 
-public class LoadBusStopInfo {
+public class SaveBusStopInfo {
 
     private BusStopLoaderCallBacks busStopLoaderCallBacks;
     //private Context context;
 
-    public LoadBusStopInfo(Context context) {
+    public SaveBusStopInfo(Context context) {
 
         busStopLoaderCallBacks = new BusStopLoaderCallBacks(context);
     }
 
-    public void writeInInternalStorage(List<BusStopInfo> busStopInfos) {
+    public void writeInInternalStorage(List<BusStop> busStopInfos) {
 
-        ArrayList<BusStopInfo> busStopInfosArrayList = (ArrayList<BusStopInfo>) busStopInfos;
+        ArrayList<BusStop> busStopInfosArrayList = (ArrayList<BusStop>) busStopInfos;
     }
 
-    public class BusStopLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStopInfo>> {
+    public class BusStopLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStop>> {
 
         private Context context;
 
@@ -41,21 +41,21 @@ public class LoadBusStopInfo {
         @NonNull
         @NotNull
         @Override
-        public LoadBusStopInfoLoader onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
+        public SaveBusStopInfoLoader onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
 
-            LoadBusStopInfoLoader busStopLoader = new LoadBusStopInfoLoader(context);
+            SaveBusStopInfoLoader busStopLoader = new SaveBusStopInfoLoader(context);
 
             return busStopLoader;
         }
 
         @Override
-        public void onLoadFinished(@NonNull @NotNull Loader<List<BusStopInfo>> loader, List<BusStopInfo> data) {
+        public void onLoadFinished(@NonNull @NotNull Loader<List<BusStop>> loader, List<BusStop> data) {
 
             writeInInternalStorage(data);
         }
 
         @Override
-        public void onLoaderReset(@NonNull @NotNull Loader<List<BusStopInfo>> loader) {
+        public void onLoaderReset(@NonNull @NotNull Loader<List<BusStop>> loader) {
 
         }
     }

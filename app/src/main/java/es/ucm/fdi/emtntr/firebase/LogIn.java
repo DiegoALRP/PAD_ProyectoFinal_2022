@@ -29,9 +29,9 @@ import java.util.List;
 
 import es.ucm.fdi.emtntr.Nav_Activity;
 import es.ucm.fdi.emtntr.R;
-import es.ucm.fdi.emtntr.firebase.loadData.LoadBusStopInfoLoader;
+import es.ucm.fdi.emtntr.firebase.loadData.SaveBusStopInfoLoader;
 import es.ucm.fdi.emtntr.internalStorage.WriteIE;
-import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
+import es.ucm.fdi.emtntr.model.BusStop;
 
 public class LogIn extends AppCompatActivity {
 
@@ -53,9 +53,9 @@ public class LogIn extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         busStopLoaderCallBacks = new BusStopLoaderCallBacks(this);
-        /*Bundle queryBundle = new Bundle();
+        Bundle queryBundle = new Bundle();
         //getLoaderManager().restartLoader(1, queryBundle, busStopLoaderCallBacks);
-        LoaderManager.getInstance(this).restartLoader(0, queryBundle, busStopLoaderCallBacks);*/
+        LoaderManager.getInstance(this).restartLoader(0, queryBundle, busStopLoaderCallBacks);
 
         if (userIsLoggedIn()){
             reload();
@@ -133,9 +133,9 @@ public class LogIn extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void writeInInternalStorage(List<BusStopInfo> busStopInfos) {
+    public void writeInInternalStorage(List<BusStop> busStopInfos) {
 
-        List<BusStopInfo> busStopInfos1 = new ArrayList<>();
+        List<BusStop> busStopInfos1 = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             busStopInfos1.add(busStopInfos.get(i));
         }
@@ -146,7 +146,7 @@ public class LogIn extends AppCompatActivity {
         writeIE.write(getApplicationContext(), filename, data);
     }
 
-    class BusStopLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStopInfo>> {
+    class BusStopLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStop>> {
 
         private Context context;
 
@@ -157,21 +157,21 @@ public class LogIn extends AppCompatActivity {
         @NonNull
         @NotNull
         @Override
-        public LoadBusStopInfoLoader onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
+        public SaveBusStopInfoLoader onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
 
-            LoadBusStopInfoLoader busStopLoader = new LoadBusStopInfoLoader(context);
+            SaveBusStopInfoLoader busStopLoader = new SaveBusStopInfoLoader(context);
 
             return busStopLoader;
         }
 
         @Override
-        public void onLoadFinished(@NonNull @NotNull Loader<List<BusStopInfo>> loader, List<BusStopInfo> data) {
+        public void onLoadFinished(@NonNull @NotNull Loader<List<BusStop>> loader, List<BusStop> data) {
 
             writeInInternalStorage(data);
         }
 
         @Override
-        public void onLoaderReset(@NonNull @NotNull Loader<List<BusStopInfo>> loader) {
+        public void onLoaderReset(@NonNull @NotNull Loader<List<BusStop>> loader) {
 
         }
     }
