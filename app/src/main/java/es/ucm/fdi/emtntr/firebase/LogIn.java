@@ -53,9 +53,9 @@ public class LogIn extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         busStopLoaderCallBacks = new BusStopLoaderCallBacks(this);
-        Bundle queryBundle = new Bundle();
+        /*Bundle queryBundle = new Bundle();
         //getLoaderManager().restartLoader(1, queryBundle, busStopLoaderCallBacks);
-        LoaderManager.getInstance(this).restartLoader(0, queryBundle, busStopLoaderCallBacks);
+        LoaderManager.getInstance(this).restartLoader(0, queryBundle, busStopLoaderCallBacks);*/
 
         if (userIsLoggedIn()){
             reload();

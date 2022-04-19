@@ -17,25 +17,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.ucm.fdi.emtntr.R;
+import es.ucm.fdi.emtntr.model.BusStop;
 
 public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResultListAdapter.BusStopViewHolder> implements View.OnClickListener, Filterable {
 
     private Context context;
     private LayoutInflater mInflater;
-    private ArrayList<BusStopInfo> busStopList;
-    private ArrayList<BusStopInfo> busStopListFull;
+    private ArrayList<BusStop> busStopList;
+    private ArrayList<BusStop> busStopListFull;
     private final int MAX_RESULTS = 40;
 
-    public BusStopResultListAdapter(Context context, List<BusStopInfo> busStopList, LayoutInflater layoutInflater) {
+    public BusStopResultListAdapter(Context context, List<BusStop> busStopList, LayoutInflater layoutInflater) {
 
         this.context = context;
         this.mInflater = LayoutInflater.from(context);//layoutInflater;
         setBusStopData(busStopList);
     }
 
-    public void setBusStopData(List<BusStopInfo> busStopList) {
+    public void setBusStopData(List<BusStop> busStopList) {
 
-        this.busStopList = (ArrayList<BusStopInfo>) busStopList;
+        this.busStopList = (ArrayList<BusStop>) busStopList;
         this.busStopListFull = new ArrayList<>(busStopList);
     }
 
@@ -56,9 +57,9 @@ public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResult
         String busStopID = "";
         String busStopLines = "aa";
 
-        busStopName = busStopList.get(position).getBusStopName();
-        busStopID = busStopList.get(position).getBusStopID();
-        ArrayList<String> linesList = busStopList.get(position).getLinesList();
+        busStopName = busStopList.get(position).getName();
+        busStopID = busStopList.get(position).getId();
+        ArrayList<String> linesList = (ArrayList<String>) busStopList.get(position).getLines();
         int linesSize = linesList.size();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < linesSize; i++) {
@@ -99,7 +100,7 @@ public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResult
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
-            ArrayList<BusStopInfo> filteredList = new ArrayList<>();
+            ArrayList<BusStop> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(busStopListFull);
@@ -108,10 +109,10 @@ public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResult
 
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (BusStopInfo busStop: busStopListFull) {
+                for (BusStop busStop: busStopListFull) {
 
-                    String id = busStop.busStopID;
-                    String name = busStop.busStopName;
+                    String id = busStop.getId();
+                    String name = busStop.getName();
 
                     if (id != null && (id.toLowerCase().contains(filterPattern) || id.toLowerCase().equals(filterPattern))) {
                         filteredList.add(busStop);
@@ -122,7 +123,7 @@ public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResult
                 }
             }
 
-            ArrayList<BusStopInfo> finalFilteredList = new ArrayList<>();
+            ArrayList<BusStop> finalFilteredList = new ArrayList<>();
             if (filteredList.size() < MAX_RESULTS) {
                 finalFilteredList.addAll(filteredList);
             }

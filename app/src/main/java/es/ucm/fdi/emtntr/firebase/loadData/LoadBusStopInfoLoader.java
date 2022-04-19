@@ -41,11 +41,11 @@ public class LoadBusStopInfoLoader extends AsyncTaskLoader<List<BusStopInfo>> {
 
         EMTApi emtApi = new EMTApi();
         List<BusStopInfo> response = new ArrayList<BusStopInfo>();
-        try {
-            response = emtApi.getBusStopsList();
+        /*try {
+            //response = emtApi.getBusStopsList();
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return response;
     }

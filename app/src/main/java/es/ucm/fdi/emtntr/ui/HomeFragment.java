@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.ucm.fdi.emtntr.R;
+import es.ucm.fdi.emtntr.model.BusStop;
 import es.ucm.fdi.emtntr.stopSearch.BusStopLoader;
 import es.ucm.fdi.emtntr.stopSearch.BusStopResultListAdapter;
 import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
@@ -52,7 +53,7 @@ public class HomeFragment extends Fragment {
 
         busStopLoaderCallBacks = new BusStopLoaderCallBacks(root.getContext());
 
-        busStopResultListAdapter = new BusStopResultListAdapter(root.getContext(), new ArrayList<BusStopInfo>(), inflater);
+        busStopResultListAdapter = new BusStopResultListAdapter(root.getContext(), new ArrayList<>(), inflater);
         recyclerView_busStopsList.setAdapter(busStopResultListAdapter);
         recyclerView_busStopsList.setLayoutManager(new LinearLayoutManager(root.getContext()));
 
@@ -83,7 +84,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    public void updateBusStopResultList(List<BusStopInfo> busStopInfoList) {
+    public void updateBusStopResultList(List<BusStop> busStopInfoList) {
 
         //Toast.makeText(getContext(), "Act", Toast.LENGTH_SHORT).show();
 
@@ -97,7 +98,7 @@ public class HomeFragment extends Fragment {
         LoaderManager.getInstance(this).restartLoader(0, queryBundle, busStopLoaderCallBacks);
     }
 
-    public class BusStopLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStopInfo>> {
+    public class BusStopLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStop>> {
 
         private Context context;
 
@@ -116,7 +117,7 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        public void onLoadFinished(@NonNull @NotNull Loader<List<BusStopInfo>> loader, List<BusStopInfo> data) {
+        public void onLoadFinished(@NonNull @NotNull Loader<List<BusStop>> loader, List<BusStop> data) {
 
             /*if (data.size() < 20) {
                 updateBusStopResultList(data);
@@ -132,7 +133,7 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        public void onLoaderReset(@NonNull @NotNull Loader<List<BusStopInfo>> loader) {
+        public void onLoaderReset(@NonNull @NotNull Loader<List<BusStop>> loader) {
 
         }
     }

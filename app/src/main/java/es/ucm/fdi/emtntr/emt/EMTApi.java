@@ -193,13 +193,20 @@ public class EMTApi {
         }
     }
 
-    public List<BusStopInfo> getBusStopsList() throws JSONException {
+    public Response<List<BusStop>> getBusStopsList() throws JSONException {
         Response<JSONArray> res = apiCall(buildPath("transport/busemtmad/stops/list"), "");
-        List<BusStopInfo> busStopInfoList = new ArrayList<BusStopInfo>();
+        List<BusStopInfo> busStopInfoList = new ArrayList<>();
 
         if (res.getCode().equals("00")) {
 
-            JSONArray jsonArray = res.getData();
+            return new Response<>(res.getCode(), res.getMessage(), BusStop.fromBasicToList(res.getData()));
+
+        }
+        else {
+
+            return new Response<>(res.getCode(), res.getMessage(), BusStop.fromBasicToList(res.getData()));
+        }
+            /*JSONArray jsonArray = res.getData();
             Gson gson = new Gson();
             ArrayList<LinkedTreeMap<String, Object>> busStopList = gson.fromJson(String.valueOf(jsonArray), ArrayList.class);
             for (LinkedTreeMap<String, Object> busStop: busStopList) {
@@ -224,9 +231,6 @@ public class EMTApi {
                 busStopInfoList.add(busStopInfo);
             }
         } else {
-            return busStopInfoList;
-        }
-
-        return busStopInfoList;
+            return busStopInfoList;*/
     }
 }

@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.ucm.fdi.emtntr.emt.EMTApi;
+import es.ucm.fdi.emtntr.emt.Response;
+import es.ucm.fdi.emtntr.model.BusStop;
 
-public class BusStopLoader extends AsyncTaskLoader<List<BusStopInfo>> {
+public class BusStopLoader extends AsyncTaskLoader<List<BusStop>> {
 
     private String busStopID;
 
@@ -27,9 +29,9 @@ public class BusStopLoader extends AsyncTaskLoader<List<BusStopInfo>> {
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override
-    public List<BusStopInfo> loadInBackground() {
+    public List<BusStop> loadInBackground() {
 
-        List<BusStopInfo> busStopList;
+        List<BusStop> busStopList;
         busStopList = getBusStopInfo();
         return busStopList;
     }
@@ -40,12 +42,14 @@ public class BusStopLoader extends AsyncTaskLoader<List<BusStopInfo>> {
         forceLoad();
     }
 
-    public List<BusStopInfo> getBusStopInfo() {
+    public List<BusStop> getBusStopInfo() {
 
         EMTApi emtApi = new EMTApi();
-        List<BusStopInfo> response = new ArrayList<BusStopInfo>();
+        List<BusStop> response = new ArrayList<>();
         try {
-            response = emtApi.getBusStopsList();
+            Response<List<BusStop>> busStop = emtApi.getBusStopsList();
+            response = busStop.getData();
+            //response = emtApi.getBusStopsList();
         } catch (JSONException e) {
             e.printStackTrace();
         }
