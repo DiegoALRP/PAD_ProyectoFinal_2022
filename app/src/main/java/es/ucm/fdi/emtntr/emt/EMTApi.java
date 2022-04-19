@@ -22,7 +22,7 @@ import es.ucm.fdi.emtntr.model.StopArrivals;
 
 public class EMTApi {
 
-    private static final String baseURL = "https://openapi.emtmadrid.es/v1/";
+    private static final String baseURL = "https://openapi.emtmadrid.es/v2/";
     private String token = null;
 
     public EMTApi(String user, String pass) {
@@ -159,7 +159,7 @@ public class EMTApi {
 
         if (res.getCode().equals("00")) {
             try {
-                return new Response<>(res.getCode(), res.getMessage(), BusStop.fromNear(res.getData().getJSONObject(0).getJSONArray("stops")));
+                return new Response<>(res.getCode(), res.getMessage(), BusStop.fromNear(res.getData()));
             } catch (JSONException e) {
                 e.printStackTrace();
                 return new Response<>("1000", e.getMessage());

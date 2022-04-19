@@ -1,5 +1,8 @@
 package es.ucm.fdi.emtntr.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
@@ -11,7 +14,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusStop {
+public class BusStop implements Parcelable {
 
     private final String id;
     private final String name;
@@ -31,6 +34,24 @@ public class BusStop {
         this.linesList = linesList;
     }
 
+    protected BusStop(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        coords = in.readParcelable(LatLng.class.getClassLoader());
+    }
+
+    public static final Creator<BusStop> CREATOR = new Creator<BusStop>() {
+        @Override
+        public BusStop createFromParcel(Parcel in) {
+            return new BusStop(in);
+        }
+
+        @Override
+        public BusStop[] newArray(int size) {
+            return new BusStop[size];
+        }
+    };
+
     public static BusStop fromDetails(JSONObject json) throws JSONException {
         JSONArray coords = json.getJSONObject("geometry").getJSONArray("coordinates");
 
@@ -41,11 +62,20 @@ public class BusStop {
         return stop;
     }
 
+    public static BusStop fromDetailsV2(JSONObject json) throws JSONException {
+        JSONArray coords = json.getJSONObject("geometry").getJSONArray("coordinates");
+        String id = json.getString("stopId");
+        String name = json.getString("stopName");
+        LatLng ll = new LatLng(coords.getDouble(1), coords.getDouble(0));
+        BusStop stop = new BusStop(id, name, ll);
+        return stop;
+    }
+
     public static List<BusStop> fromNear(JSONArray json) throws JSONException {
         List<BusStop> list = new ArrayList<>();
 
         for (int i = 0; i < json.length(); i++) {
-            list.add(fromDetails(json.getJSONObject(i)));
+            list.add(fromDetailsV2(json.getJSONObject(i)));
         }
         return list;
     }
@@ -124,5 +154,17 @@ public class BusStop {
 
     public List<String> getLines() {
         return linesList;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeParcelable(coords, i);
+        parcel.writeDouble(coords.latitude);
+        parcel.writeDouble(coords.latitude);
     }
 }
