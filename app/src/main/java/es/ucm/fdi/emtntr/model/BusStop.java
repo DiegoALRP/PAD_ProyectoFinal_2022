@@ -11,8 +11,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
-
 public class BusStop {
 
     private final String id;

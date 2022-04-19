@@ -1,13 +1,12 @@
 package es.ucm.fdi.emtntr.ui;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +25,6 @@ import es.ucm.fdi.emtntr.R;
 import es.ucm.fdi.emtntr.model.BusStop;
 import es.ucm.fdi.emtntr.stopSearch.BusStopLoader;
 import es.ucm.fdi.emtntr.stopSearch.BusStopResultListAdapter;
-import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
 
 public class HomeFragment extends Fragment {
 
@@ -35,6 +33,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView_busStopsList;
     private SearchView searchView;
     private View view;
+    private ProgressDialog progressDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -90,9 +89,16 @@ public class HomeFragment extends Fragment {
 
         busStopResultListAdapter.setBusStopData(busStopInfoList);
         busStopResultListAdapter.notifyDataSetChanged();
+
+        progressDialog.dismiss();
     }
 
     public void searchBusStops(View view) {
+
+        progressDialog = new ProgressDialog(view.getContext());
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Please wait");
+        progressDialog.show();
 
         Bundle queryBundle = new Bundle();
         LoaderManager.getInstance(this).restartLoader(0, queryBundle, busStopLoaderCallBacks);
