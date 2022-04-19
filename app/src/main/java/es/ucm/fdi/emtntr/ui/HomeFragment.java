@@ -40,13 +40,13 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Button button = root.findViewById(R.id.search_home_button);
+        /*Button button = root.findViewById(R.id.search_home_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchBusStops(v);
             }
-        });
+        });*/
 
         recyclerView_busStopsList = root.findViewById(R.id.search_home_recyclerView_BusStopList);
 
@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //searchBusStops(root);
+        searchBusStops(root);
         view = root;
 
         return root;
@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
 
     public void updateBusStopResultList(List<BusStopInfo> busStopInfoList) {
 
-        Toast.makeText(getContext(), "Act", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "Act", Toast.LENGTH_SHORT).show();
 
         busStopResultListAdapter.setBusStopData(busStopInfoList);
         busStopResultListAdapter.notifyDataSetChanged();
