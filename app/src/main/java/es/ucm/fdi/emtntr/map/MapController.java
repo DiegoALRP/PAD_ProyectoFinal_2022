@@ -55,7 +55,7 @@ public class MapController  {
                 marcadores.add(mMap.addMarker(new MarkerOptions()
                         .position(b.getCoords())
                         .title(b.getName())
-                        .snippet("numero: " + b.getId())
+                        .snippet(b.getId())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bus))));
             }
         }

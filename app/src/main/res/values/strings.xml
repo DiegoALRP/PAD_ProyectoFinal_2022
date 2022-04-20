@@ -19,4 +19,11 @@
     <string name="Saturday">S</string>
     <string name="Sunday">S</string>
     <string name="addNotificationButton">Add Notification</string>
+
+    <!-- Notifications -->
+    <string name="line">Line: </string>
+    <string name="arrivals">Arrivals: </string>
+    <string name="avisame">Avísame: </string>
+    <string name="times">1 min, 12 min</string>
+    <string name="toggleButton"> </string>
 </resources>

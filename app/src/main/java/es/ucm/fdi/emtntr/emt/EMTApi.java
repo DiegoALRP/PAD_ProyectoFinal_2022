@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
+import es.ucm.fdi.emtntr.model.Arrival;
 import es.ucm.fdi.emtntr.model.BusStop;
 import es.ucm.fdi.emtntr.model.StopArrivals;
 
@@ -145,6 +146,20 @@ public class EMTApi {
         if (res.getCode().equals("00")) {
             try {
                 return new Response<>(res.getCode(), res.getMessage(), StopArrivals.fromArrivals(stop, res.getData().getJSONObject(0).getJSONArray("Arrive")));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return new Response<>("1000", e.getMessage());
+            }
+        } else {
+            return new Response<>(res.getCode(), res.getMessage());
+        }
+    }
+
+    public Response<List<Arrival>> getArrives(BusStop stop) {
+        Response<JSONArray> res = apiCall(buildPath("transport/busemtmad/stops", stop.getId(), "arrives"), "{\"Text_EstimationsRequired_YN\":\"Y\"}");
+        if (res.getCode().equals("00")) {
+            try {
+                return new Response<>(res.getCode(), res.getMessage(), Arrival.fromArrive(res.getData().getJSONObject(0).getJSONArray("Arrive")));
             } catch (JSONException e) {
                 e.printStackTrace();
                 return new Response<>("1000", e.getMessage());

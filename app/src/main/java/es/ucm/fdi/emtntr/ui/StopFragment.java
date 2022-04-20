@@ -1,18 +1,40 @@
 package es.ucm.fdi.emtntr.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import es.ucm.fdi.emtntr.R;
+import es.ucm.fdi.emtntr.StopArrives.ArrivalListAdapter;
+import es.ucm.fdi.emtntr.StopArrives.AsyncAdaptableLoader;
+import es.ucm.fdi.emtntr.model.Arrival;
 import es.ucm.fdi.emtntr.model.BusStop;
+import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
+import es.ucm.fdi.emtntr.stopSearch.BusStopResultListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +48,10 @@ public class StopFragment extends Fragment {
 
     private TextView txtv1;
     private TextView txtv2;
+    private ToggleButton toggleButton;
+    private RecyclerView recyclerView_arrivals;
+    private ArrivalListAdapter arrivalListAdapter;
+    private ArrivalsLoaderCallBacks arrivalsLoaderCallBacks;
 
     public StopFragment() {
         // Required empty public constructor
@@ -55,10 +81,84 @@ public class StopFragment extends Fragment {
         View root =  inflater.inflate(R.layout.fragment_stop, container, false);
         txtv1 = root.findViewById(R.id.txtv1);
         txtv2 = root.findViewById(R.id.txtv2);
-
+        toggleButton = (ToggleButton) root.findViewById(R.id.toggleButton);
 
         txtv1.setText(busStop.getName());
         txtv2.setText("Número: " + busStop.getId());
+
+        toggleButton.setChecked(false);
+        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star_empty));
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if(checked) toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star));
+                else toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star_empty));
+            }
+        });
+
+        recyclerView_arrivals = root.findViewById(R.id.arrivals_recyclerView);
+
+        arrivalsLoaderCallBacks = new StopFragment.ArrivalsLoaderCallBacks(getContext());
+
+        arrivalListAdapter = new ArrivalListAdapter(root.getContext(), new ArrayList<Arrival>(), inflater);
+        recyclerView_arrivals.setAdapter(arrivalListAdapter);
+        recyclerView_arrivals.setLayoutManager(new LinearLayoutManager(root.getContext()));
+
+        LoaderManager.getInstance(this).restartLoader(0, new Bundle(), arrivalsLoaderCallBacks);
+
+
         return root;
+    }
+
+    public void mostrarLineas(List<Arrival> data)
+    {
+        //Agrupo los Arrival por línea
+
+        Map<String, Arrival> hashMap = new HashMap<>();
+        String lineAux="";
+        for(Arrival a: data)
+        {
+            if(hashMap.containsKey(a.getLine())) hashMap.get(a.getLine()).putTimesString(a.getTime());
+            else {
+                a.putTimesString(a.getTime());
+                hashMap.put(a.getLine(), a);
+            }
+        }
+        data = new ArrayList<>(hashMap.values());
+
+        arrivalListAdapter.setData(data);
+        arrivalListAdapter.notifyDataSetChanged();
+    }
+
+    public class ArrivalsLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<Arrival>> {
+
+        Context context;
+        public ArrivalsLoaderCallBacks(Context context) {
+            this.context = context;
+        }
+
+        @NonNull
+        @NotNull
+        @Override
+        public AsyncAdaptableLoader<List<Arrival>> onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
+
+            String[] loaderArgs = new String[]{String.valueOf(busStop.getId())};
+            AsyncAdaptableLoader<List<Arrival>> arrivalsLoader =
+                    new AsyncAdaptableLoader<List<Arrival>>(context, loaderArgs, AsyncAdaptableLoader.LoaderSelector.ARRIVE_TIMES);
+
+            return arrivalsLoader;
+        }
+
+        @Override
+        public void onLoadFinished(@NonNull @NotNull Loader<List<Arrival>> loader, List<Arrival> data) {
+
+            mostrarLineas(data);
+        }
+
+        @Override
+        public void onLoaderReset(@NonNull @NotNull Loader<List<Arrival>> loader) {
+
+        }
+
     }
 }

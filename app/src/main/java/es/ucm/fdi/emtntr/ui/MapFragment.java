@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import es.ucm.fdi.emtntr.R;
+import es.ucm.fdi.emtntr.StopArrives.AsyncAdaptableLoader;
 import es.ucm.fdi.emtntr.map.MapController;
 import es.ucm.fdi.emtntr.map.NearBusStopLoader;
 import es.ucm.fdi.emtntr.model.BusStop;
@@ -41,7 +42,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private LocationManager locationManager;
     private NearBusStopLoaderCallBacks nearBusStopLoaderCallBacks;
     private LatLng pos;
+
     private final double max_dist = 0.5; // kilometros para volver a calcular las paradas
+    private final String max_radio = "1500"; // metros a los que detecta las paradas
 
     @SuppressLint("MissingPermission")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -142,34 +145,36 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
 
-        public class NearBusStopLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStop>> {
+    public class NearBusStopLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStop>> {
 
-            Context context;
-            public NearBusStopLoaderCallBacks(Context context) {
-                this.context = context;
-            }
+        Context context;
+        public NearBusStopLoaderCallBacks(Context context) {
+            this.context = context;
+        }
 
-            @NonNull
-            @NotNull
-            @Override
-            public NearBusStopLoader onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
+        @NonNull
+        @NotNull
+        @Override
+        public AsyncAdaptableLoader<List<BusStop>> onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
 
-                NearBusStopLoader nearBusStopLoader = new NearBusStopLoader(context, pos);
+            String[] loaderArgs = new String[]{String.valueOf(pos.latitude), String.valueOf(pos.longitude), max_radio};
+            AsyncAdaptableLoader<List<BusStop>> nearBusStopLoader =
+                    new AsyncAdaptableLoader<List<BusStop>>(context, loaderArgs, AsyncAdaptableLoader.LoaderSelector.NEAR_STOPS);
 
-                return nearBusStopLoader;
-            }
+            return nearBusStopLoader;
+        }
 
-            @Override
-            public void onLoadFinished(@NonNull @NotNull Loader<List<BusStop>> loader, List<BusStop> data) {
+        @Override
+        public void onLoadFinished(@NonNull @NotNull Loader<List<BusStop>> loader, List<BusStop> data) {
 
-                mapController.mostrarParadas(data);
-            }
+            mapController.mostrarParadas(data);
+        }
 
-            @Override
-            public void onLoaderReset(@NonNull @NotNull Loader<List<BusStop>> loader) {
-
-            }
+        @Override
+        public void onLoaderReset(@NonNull @NotNull Loader<List<BusStop>> loader) {
 
         }
+
+    }
 
 }
