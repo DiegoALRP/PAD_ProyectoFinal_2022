@@ -9,6 +9,9 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +21,7 @@ import java.util.List;
 
 import es.ucm.fdi.emtntr.R;
 import es.ucm.fdi.emtntr.model.BusStop;
+import es.ucm.fdi.emtntr.ui.StopFragment;
 
 public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResultListAdapter.BusStopViewHolder> implements View.OnClickListener, Filterable {
 
@@ -26,11 +30,13 @@ public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResult
     private ArrayList<BusStop> busStopList;
     private ArrayList<BusStop> busStopListFull;
     private final int MAX_RESULTS = 40;
+    private FragmentManager parentFragment;
 
-    public BusStopResultListAdapter(Context context, List<BusStop> busStopList, LayoutInflater layoutInflater) {
+    public BusStopResultListAdapter(Context context, List<BusStop> busStopList, LayoutInflater layoutInflater, FragmentManager parentFragment) {
 
         this.context = context;
         this.mInflater = LayoutInflater.from(context);//layoutInflater;
+        this.parentFragment = parentFragment;
         setBusStopData(busStopList);
     }
 
@@ -76,6 +82,20 @@ public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResult
         holder.busStopName.setText(busStopName);
         holder.busStopID.setText(busStopID);
         holder.busStopLines.setText(busStopLines);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = BusStopResultListAdapter.this.parentFragment;
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setReorderingAllowed(true);
+
+                transaction.replace(R.id.nav_host_fragment, StopFragment.newInstance(busStopList.get(position)), null);
+
+                transaction.commit();
+            }
+        });
     }
 
     @Override
@@ -164,7 +184,10 @@ public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResult
             busStopLines = itemView.findViewById(R.id.searchBusStop_busStopLines_textView);
 
             this.adapter = adapter;
-            //busStopName = itemView.findViewById(R.id.busStopName_textView);
+        }
+
+        public void onClickModified(View v, BusStop busStop) {
+
         }
 
         @Override

@@ -40,19 +40,12 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        /*Button button = root.findViewById(R.id.search_home_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchBusStops(v);
-            }
-        });*/
 
         recyclerView_busStopsList = root.findViewById(R.id.search_home_recyclerView_BusStopList);
 
         busStopLoaderCallBacks = new BusStopLoaderCallBacks(root.getContext());
 
-        busStopResultListAdapter = new BusStopResultListAdapter(root.getContext(), new ArrayList<>(), inflater);
+        busStopResultListAdapter = new BusStopResultListAdapter(root.getContext(), new ArrayList<>(), inflater, getParentFragmentManager());
         recyclerView_busStopsList.setAdapter(busStopResultListAdapter);
         recyclerView_busStopsList.setLayoutManager(new LinearLayoutManager(root.getContext()));
 
