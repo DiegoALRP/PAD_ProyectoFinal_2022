@@ -24,7 +24,6 @@ import java.util.List;
 import es.ucm.fdi.emtntr.R;
 import es.ucm.fdi.emtntr.model.Bus;
 import es.ucm.fdi.emtntr.model.BusStop;
-import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
 import es.ucm.fdi.emtntr.stopSearch.BusStopLoader;
 
 public class MapController  {

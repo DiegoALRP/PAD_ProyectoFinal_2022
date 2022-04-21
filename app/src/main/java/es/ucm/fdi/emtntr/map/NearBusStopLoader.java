@@ -17,7 +17,6 @@ import java.util.List;
 import es.ucm.fdi.emtntr.emt.EMTApi;
 import es.ucm.fdi.emtntr.emt.Response;
 import es.ucm.fdi.emtntr.model.BusStop;
-import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
 
 public class NearBusStopLoader extends AsyncTaskLoader<List<BusStop>> {
 

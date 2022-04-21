@@ -24,7 +24,6 @@ import java.util.List;
 
 import es.ucm.fdi.emtntr.R;
 import es.ucm.fdi.emtntr.model.Arrival;
-import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
 
 public class ArrivalListAdapter extends RecyclerView.Adapter<ArrivalListAdapter.ArrivalsViewHolder> implements View.OnClickListener {
 

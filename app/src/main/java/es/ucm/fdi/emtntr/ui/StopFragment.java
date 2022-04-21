@@ -33,7 +33,6 @@ import es.ucm.fdi.emtntr.StopArrives.ArrivalListAdapter;
 import es.ucm.fdi.emtntr.StopArrives.AsyncAdaptableLoader;
 import es.ucm.fdi.emtntr.model.Arrival;
 import es.ucm.fdi.emtntr.model.BusStop;
-import es.ucm.fdi.emtntr.stopSearch.BusStopInfo;
 import es.ucm.fdi.emtntr.stopSearch.BusStopResultListAdapter;
 
 /**
