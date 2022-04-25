@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_firebase_login_page);
 
         log = findViewById(R.id.Log_btn);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -36,16 +36,7 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
         }
 
-        /*Gson gson = new Gson();
-        BusStop busStop = new BusStop();
-        busStop.setBusStopDirection("Dir");
-        busStop.setBusStopName("pedr");
-
-        String json = gson.toJson(busStop);
-
-        BusStop busStop1 = gson.fromJson(json, BusStop.class);
-
-        int p;*/
+        startActivity(new Intent(this, LogIn.class));
     }
 
     public void login(View view){
