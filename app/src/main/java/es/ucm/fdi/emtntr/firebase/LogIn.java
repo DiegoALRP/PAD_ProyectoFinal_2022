@@ -1,6 +1,7 @@
 package es.ucm.fdi.emtntr.firebase;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
@@ -39,6 +41,9 @@ public class LogIn extends AppCompatActivity {
 
     private TextInputEditText email_input;
     private TextInputEditText password_input;
+
+    private String user_email;
+    private String user_password;
 
     private BusStopLoaderCallBacks busStopLoaderCallBacks;
 
@@ -88,10 +93,35 @@ public class LogIn extends AppCompatActivity {
 
     private void loginButtonClicked() {
 
-        String email = String.valueOf(email_input.getText());
-        String password = String.valueOf(password_input.getText());
+        user_email = String.valueOf(email_input.getText());
+        user_password = String.valueOf(password_input.getText());
 
-        logInUser(email, password);
+        verifyInput();
+
+        //logInUser(email, password);
+    }
+
+    private void verifyInput() {
+
+        boolean is_ok = true;
+        String error = "";
+
+        if (user_email.equals("")) {
+            is_ok = false;
+            error = "email is empty";
+        }
+        if (user_password.equals("")) {
+            is_ok = false;
+            error = "password field is empty";
+        }
+
+        if (!is_ok) {
+            showAlertErrorUser(error);
+        }
+        else {
+            logInUser(user_email, user_password);
+        }
+
     }
 
     private void createAccountButtonClicked() {
@@ -124,11 +154,13 @@ public class LogIn extends AppCompatActivity {
 
     //Reloads the page or starts a new activity
     private void reload() {
+
         Intent intent = new Intent(this, Nav_Activity.class);
         startActivity(intent);
     }
 
     private void goToMain() {
+
         Intent intent = new Intent(this, Nav_Activity.class);
         startActivity(intent);
     }
@@ -145,6 +177,21 @@ public class LogIn extends AppCompatActivity {
         WriteIE writeIE = new WriteIE();
         writeIE.write(getApplicationContext(), filename, data);
     }
+
+    private void showAlertErrorUser(String st_error) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(st_error)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 
     class BusStopLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStop>> {
 
