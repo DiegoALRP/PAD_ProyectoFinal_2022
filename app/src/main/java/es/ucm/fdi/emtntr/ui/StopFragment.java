@@ -1,6 +1,7 @@
 package es.ucm.fdi.emtntr.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import org.jetbrains.annotations.NotNull;
@@ -171,7 +173,7 @@ public class StopFragment extends Fragment {
 
     }
 
-    //Favourites Part
+    //Favourites Section
     private void addBusStopToFavourites() {
 
         LinesLoaderCallBacks linesLoaderCallBacks = new LinesLoaderCallBacks(getContext());
@@ -181,12 +183,22 @@ public class StopFragment extends Fragment {
 
     private void addLinesInfo(ArrayList<BusStop> data) {
 
+        Resources resources = getResources();
+        String st = resources.getString(R.string.favourite_alert_favouriteAdded);
+        Toast.makeText(getContext(), st, Toast.LENGTH_LONG).show();
+
         WriteIE writeIE = new WriteIE();
-        writeIE.writeFavouriteBusStop(getActivity().getApplicationContext(), data);
+        writeIE.addAndWriteBusStopToFavourites(getActivity().getApplicationContext(), data);
     }
 
     private void deleteBusStopFromFavourites() {
 
+        Resources resources = getResources();
+        String st = resources.getString(R.string.favourite_alert_favouriteDeleted);
+        Toast.makeText(getContext(), st, Toast.LENGTH_LONG).show();
+
+        WriteIE writeIE = new WriteIE();
+        writeIE.deleteBusStop(getActivity().getApplicationContext(), busStop.getId());
     }
 
     public class LinesLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStop>> {

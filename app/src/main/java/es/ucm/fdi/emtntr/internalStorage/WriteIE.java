@@ -63,7 +63,7 @@ public class WriteIE {
         }
     }
 
-    public void writeFavouriteBusStop(Context context, ArrayList<BusStop> busStops) {
+    public void addAndWriteBusStopToFavourites(Context context, ArrayList<BusStop> busStops) {
 
         StringBuilder stringBuilder = new StringBuilder();
         BusStop busStop = busStops.get(0);
@@ -111,6 +111,37 @@ public class WriteIE {
                             Gson gson = new Gson();
                             String data = gson.toJson(map);
                             write(context, filename, data);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    public void deleteBusStop(Context context, String busStopId) {
+
+        firebaseDatabase = FirebaseDatabase.getInstance("https://pad-proyectofinal-1-default-rtdb.europe-west1.firebasedatabase.app");
+        databaseReference = firebaseDatabase.getReference();
+        mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getUid() != null) {
+
+            databaseReference.child(mAuth.getUid()).child("Favourites").child(busStopId).removeValue();
+
+            databaseReference.child(mAuth.getUid()).child("Favourites")
+                    .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+
+                    if (task.isSuccessful()) {
+
+                        HashMap<String, Object> map = (HashMap<String, Object>) task.getResult().getValue();
+
+                        if (map != null) {
+
+                            Gson gson = new Gson();
+                            String data = gson.toJson(map);
+                            write(context, filenameFav, data);
                         }
                     }
                 }

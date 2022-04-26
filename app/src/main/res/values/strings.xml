@@ -37,6 +37,8 @@
     <string name="favourite_busStop_image_contentDescription">Bus Stop</string>
     <string name="favourite_busStop_realName_hint">Real Name:</string>
     <string name="favourite_busStop_realName_default">Some Real Name</string>
+    <string name="favourite_alert_favouriteAdded">Added Bus Stop to Favourites</string>
+    <string name="favourite_alert_favouriteDeleted">Deleted Bus Stop from Favourites</string>
 
     <!-- Notifications -->
     <string name="lines">Lines:</string>
