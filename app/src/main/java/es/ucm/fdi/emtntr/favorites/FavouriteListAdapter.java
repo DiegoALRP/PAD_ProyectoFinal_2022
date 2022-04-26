@@ -11,9 +11,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import es.ucm.fdi.emtntr.R;
@@ -25,21 +28,21 @@ public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdap
 
     private Context context;
     private LayoutInflater mInflater;
-    private ArrayList<BusStop> busStopList;
-    private ArrayList<BusStop> busStopListFull;
+    private ArrayList<FavouriteBusInfo> busStopList;
+    private ArrayList<FavouriteBusInfo> busStopListFull;
     private FragmentManager parentFragment;
 
-    public FavouriteListAdapter(Context context, List<BusStop> busStopList, LayoutInflater layoutInflater, FragmentManager parentFragment) {
+    public FavouriteListAdapter(Context context, List<FavouriteBusInfo> busStopList, LayoutInflater layoutInflater, FragmentManager parentFragment) {
 
         this.context = context;
         this.mInflater = LayoutInflater.from(context);//layoutInflater;
         this.parentFragment = parentFragment;
-        setBusStopData(busStopList);
+        setBusStopData((ArrayList<FavouriteBusInfo>) busStopList);
     }
 
-    public void setBusStopData(List<BusStop> busStopList) {
+    public void setBusStopData(ArrayList<FavouriteBusInfo> busStopList) {
 
-        this.busStopList = (ArrayList<BusStop>) busStopList;
+        this.busStopList = busStopList;
         this.busStopListFull = new ArrayList<>(busStopList);
     }
 
@@ -56,27 +59,22 @@ public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdap
     @Override
     public void onBindViewHolder(@NonNull @NotNull BusStopViewHolder holder, int position) {
 
+        String busStopName_user = "";
         String busStopName = "";
         String busStopID = "";
         String busStopNumber = "N. ";
         String busStopLines = "aa";
 
-        busStopName = busStopList.get(position).getName();
-        busStopID = busStopNumber + busStopList.get(position).getId();
-        ArrayList<String> linesList = (ArrayList<String>) busStopList.get(position).getLines();
-        int linesSize = linesList.size();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < linesSize; i++) {
-            stringBuilder.append(linesList.get(i));
-            stringBuilder.append(", ");
+        busStopName_user = busStopList.get(position).getUser_stopBusName();
+        if (busStopName_user.equals("none")) {
+            busStopName_user = busStopList.get(position).getStopBusName();
         }
 
-        int sb_size = stringBuilder.length();
-        if (sb_size > 1) {
-            stringBuilder.delete(sb_size - 2, sb_size - 1);
-        }
-        busStopLines = stringBuilder.toString();
+        busStopName = busStopList.get(position).getStopBusName();
+        busStopID = busStopNumber + busStopList.get(position).getStopBusId();
+        busStopLines = busStopList.get(position).getBusLines();
 
+        holder.busStopName_user.setText(busStopName_user);
         holder.busStopName.setText(busStopName);
         holder.busStopID.setText(busStopID);
         holder.busStopLines.setText(busStopLines);
@@ -89,7 +87,15 @@ public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdap
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setReorderingAllowed(true);
 
-                transaction.replace(R.id.nav_host_fragment, StopFragment.newInstance(busStopList.get(position)), null);
+                String name = busStopList.get(position).getStopBusName();
+                String id = busStopList.get(position).getStopBusId();
+                String[] linesAux = busStopList.get(position).getBusLines().split(", ");
+                ArrayList<String> lines = new ArrayList<String>(Arrays.asList(linesAux));
+                LatLng coordinates = busStopList.get(position).getCoordinates();
+
+                BusStop busStop = new BusStop(id, name, coordinates, lines);
+
+                transaction.replace(R.id.nav_host_fragment, StopFragment.newInstance(busStop), null);
 
                 transaction.commit();
             }
@@ -98,7 +104,7 @@ public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdap
 
     @Override
     public int getItemCount() {
-        return 0;
+        return busStopList.size();
     }
 
     @Override
@@ -111,19 +117,21 @@ public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdap
         private TextView busStopID;
         private TextView busStopLines;
         private TextView busStopName;
+        private TextView busStopName_user;
         private FavouriteListAdapter adapter;
 
         public BusStopViewHolder(View itemView, FavouriteListAdapter adapter) {
             super(itemView);
 
-            busStopName = itemView.findViewById(R.id.searchBusStop_busStopName_textView);
-            busStopID = itemView.findViewById(R.id.searchBusStop_busStopID_textView);
-            busStopLines = itemView.findViewById(R.id.searchBusStop_busStopLines_textView);
+            busStopName = itemView.findViewById(R.id.favouriteBusStop_busStopName_textView);
+            busStopID = itemView.findViewById(R.id.favouriteBusStop_busStopID_textView);
+            busStopLines = itemView.findViewById(R.id.favouriteBusStop_busStopLines_textView);
+            busStopName_user = itemView.findViewById(R.id.favouriteBusStop_userBusStopName_textView);
 
             this.adapter = adapter;
         }
 
-        public void onClickModified(View v, BusStop busStop) {
+        public void onClickModified(View v, FavouriteBusInfo busStop) {
 
         }
 

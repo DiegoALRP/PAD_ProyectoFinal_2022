@@ -30,7 +30,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/favouriteBusStop_busStopName_textView"
+                android:id="@+id/favouriteBusStop_userBusStopName_textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
@@ -60,7 +60,7 @@
                 android:text="@string/lines"
                 android:textColor="@color/blue"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/favouriteBusStop_busStopName_textView" />
+                card_view:layout_constraintTop_toBottomOf="@+id/favouriteBusStop_userBusStopName_textView" />
 
             <TextView
                 android:id="@+id/favouriteBusStop_busStopLines_textView"
@@ -97,12 +97,14 @@
                 card_view:layout_constraintTop_toBottomOf="@+id/favouriteBusStop_busStopLines_textView" />
 
             <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
+                android:id="@+id/favouriteBusStop_busStopName_textView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="32dp"
                 android:text="@string/favourite_busStop_realName_default"
                 card_view:layout_constraintBaseline_toBaselineOf="@+id/textView3"
+                card_view:layout_constraintEnd_toStartOf="@+id/imageView"
                 card_view:layout_constraintStart_toEndOf="@+id/textView3" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
