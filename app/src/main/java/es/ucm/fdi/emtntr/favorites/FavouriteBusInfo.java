@@ -56,4 +56,12 @@ public class FavouriteBusInfo {
     public void setCoordinates(LatLng coordinates) {
         this.coordinates = coordinates;
     }
+
+    public String getBusLines() {
+        return busLines;
+    }
+
+    public void setBusLines(String busLines) {
+        this.busLines = busLines;
+    }
 }
