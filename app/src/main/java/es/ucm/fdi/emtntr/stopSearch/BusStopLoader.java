@@ -19,11 +19,13 @@ import es.ucm.fdi.emtntr.model.BusStop;
 public class BusStopLoader extends AsyncTaskLoader<List<BusStop>> {
 
     private String busStopID;
+    private Operation operation;
 
-    public BusStopLoader(@NonNull @NotNull Context context, String busStopID) {
+    public BusStopLoader(@NonNull @NotNull Context context, String busStopID, Operation operation) {
 
         super(context);
         this.busStopID = busStopID;
+        this.operation = operation;
     }
 
     @Nullable
@@ -55,5 +57,10 @@ public class BusStopLoader extends AsyncTaskLoader<List<BusStop>> {
         }
 
         return response;
+    }
+
+    public enum Operation {
+        BUS_STOP_LIST,
+        BUS_STOP_INFO
     }
 }

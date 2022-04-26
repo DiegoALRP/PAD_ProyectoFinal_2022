@@ -210,4 +210,16 @@ public class EMTApi {
             return new Response<>(res.getCode(), res.getMessage());
         }
     }
+
+    public Response<List<BusStop>> getBusStopInfo(String id) throws JSONException {
+        Response<JSONArray> res = apiCall(buildPath("transport/busemtmad/stops/", id, "detail"));
+
+        if (res.getCode().equals("00")) {
+
+            return new Response<>(res.getCode(), res.getMessage(), BusStop.fromBasicToList(res.getData()));
+        }
+        else {
+            return new Response<>(res.getCode(), res.getMessage());
+        }
+    }
 }

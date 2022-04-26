@@ -53,6 +53,8 @@ public class AsyncAdaptableLoader<T> extends AsyncTaskLoader<T> {
 
             case ARRIVE_TIMES: response = (Response<T>) emtApi.getArrives(new BusStop(args[0], null, null)); break;
 
+            case STOP_INFO: response = (Response<T>) emtApi.getStopDetails(args[0]); break;
+
         }
 
         T data = response.getData();
@@ -62,6 +64,7 @@ public class AsyncAdaptableLoader<T> extends AsyncTaskLoader<T> {
 
     public enum LoaderSelector{
         NEAR_STOPS,                 //lat, long, max_radio
-        ARRIVE_TIMES                //busStopId
+        ARRIVE_TIMES,                //busStopId
+        STOP_INFO
     }
 }

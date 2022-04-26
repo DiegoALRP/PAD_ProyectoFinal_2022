@@ -90,8 +90,16 @@ public class StopFragment extends Fragment {
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if(checked) toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star));
-                else toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star_empty));
+                if(checked) {
+
+                    addBusStopToFavourites();
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star));
+                }
+                else {
+
+                    deleteBusStopFromFavourites();
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star_empty));
+                }
             }
         });
 
@@ -156,6 +164,56 @@ public class StopFragment extends Fragment {
 
         @Override
         public void onLoaderReset(@NonNull @NotNull Loader<List<Arrival>> loader) {
+
+        }
+
+    }
+
+    //Favourites Part
+    private void addBusStopToFavourites() {
+
+        LinesLoaderCallBacks linesLoaderCallBacks = new LinesLoaderCallBacks(getContext());
+
+        LoaderManager.getInstance(this).restartLoader(1, new Bundle(), linesLoaderCallBacks);
+    }
+
+    private void addLinesInfo(ArrayList<BusStop> data) {
+
+        ArrayList<BusStop> prueba = new ArrayList<>();
+        prueba = new ArrayList<>(data);
+    }
+
+    private void deleteBusStopFromFavourites() {
+
+    }
+
+    public class LinesLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStop>> {
+
+        Context context;
+        public LinesLoaderCallBacks(Context context) {
+            this.context = context;
+        }
+
+        @NonNull
+        @NotNull
+        @Override
+        public AsyncAdaptableLoader<List<BusStop>> onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
+
+            String[] loaderArgs = new String[]{String.valueOf(busStop.getId())};
+            AsyncAdaptableLoader<List<BusStop>> arrivalsLoader =
+                    new AsyncAdaptableLoader<List<BusStop>>(context, loaderArgs, AsyncAdaptableLoader.LoaderSelector.STOP_INFO);
+
+            return arrivalsLoader;
+        }
+
+        @Override
+        public void onLoadFinished(@NonNull @NotNull Loader<List<BusStop>> loader, List<BusStop> data) {
+
+            addLinesInfo((ArrayList<BusStop>) data);
+        }
+
+        @Override
+        public void onLoaderReset(@NonNull @NotNull Loader<List<BusStop>> loader) {
 
         }
 
