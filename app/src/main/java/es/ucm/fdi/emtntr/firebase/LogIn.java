@@ -88,7 +88,6 @@ public class LogIn extends AppCompatActivity {
                 createAccountButtonClicked();
             }
         });
-        setDrawableFilterColor(this.getApplicationContext(), R.color.red, createAccount_button.getBackground());
     }
 
     public boolean userIsLoggedIn() {
@@ -195,12 +194,6 @@ public class LogIn extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    public static void setDrawableFilterColor(Context context, int colorResource, Drawable drawable) {
-
-        int filterColor = Color.parseColor(context.getResources().getString(colorResource));
-        drawable.setColorFilter(new PorterDuffColorFilter(filterColor, PorterDuff.Mode.MULTIPLY));
     }
 
 
