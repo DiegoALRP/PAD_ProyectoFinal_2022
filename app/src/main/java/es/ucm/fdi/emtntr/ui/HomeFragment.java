@@ -37,14 +37,8 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        //Fragment fragment = getParentFragmentManager().findFragmentById(R.id.navigation_home);
-
-        Fragment fragment = getParentFragmentManager().findFragmentById(R.layout.fragment_home);
-
+        
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-        //getParentFragmentManager().beginTransaction().replace(root).commit();
 
 
         recyclerView_busStopsList = root.findViewById(R.id.search_home_recyclerView_BusStopList);

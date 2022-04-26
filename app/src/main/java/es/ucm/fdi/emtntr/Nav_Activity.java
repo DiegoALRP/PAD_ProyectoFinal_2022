@@ -18,6 +18,7 @@ import androidx.navigation.ui.NavigationUI;
 import org.jetbrains.annotations.NotNull;
 
 import es.ucm.fdi.emtntr.ui.FavouriteFragment;
+import es.ucm.fdi.emtntr.ui.FavouriteListFragment;
 import es.ucm.fdi.emtntr.ui.HomeFragment;
 import es.ucm.fdi.emtntr.ui.MapFragment;
 
@@ -53,7 +54,7 @@ public class Nav_Activity extends AppCompatActivity {
                     selectedFragment = new HomeFragment();
                     break;
                 case R.id.navigation_dashboard:
-                    selectedFragment = new FavouriteFragment();
+                    selectedFragment = new FavouriteListFragment();
                     break;
                 case R.id.navigation_notifications:
                     selectedFragment = new MapFragment();

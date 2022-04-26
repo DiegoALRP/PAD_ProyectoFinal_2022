@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import es.ucm.fdi.emtntr.R;
 
-public class DashboardFragment extends Fragment {
+public class FavouriteListFragment extends Fragment {
 
 
 
