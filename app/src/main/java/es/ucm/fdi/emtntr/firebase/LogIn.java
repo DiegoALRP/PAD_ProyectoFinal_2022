@@ -3,6 +3,10 @@ package es.ucm.fdi.emtntr.firebase;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -84,6 +88,7 @@ public class LogIn extends AppCompatActivity {
                 createAccountButtonClicked();
             }
         });
+        setDrawableFilterColor(this.getApplicationContext(), R.color.red, createAccount_button.getBackground());
     }
 
     public boolean userIsLoggedIn() {
@@ -190,6 +195,12 @@ public class LogIn extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public static void setDrawableFilterColor(Context context, int colorResource, Drawable drawable) {
+
+        int filterColor = Color.parseColor(context.getResources().getString(colorResource));
+        drawable.setColorFilter(new PorterDuffColorFilter(filterColor, PorterDuff.Mode.MULTIPLY));
     }
 
 
