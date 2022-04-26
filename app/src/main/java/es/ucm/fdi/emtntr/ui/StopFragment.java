@@ -23,6 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -55,6 +62,7 @@ public class StopFragment extends Fragment {
     private RecyclerView recyclerView_arrivals;
     private ArrivalListAdapter arrivalListAdapter;
     private ArrivalsLoaderCallBacks arrivalsLoaderCallBacks;
+    private boolean ok_toAdd;
 
     public StopFragment() {
         // Required empty public constructor
@@ -89,6 +97,7 @@ public class StopFragment extends Fragment {
         txtv1.setText(busStop.getName());
         txtv2.setText("Número: " + busStop.getId());
 
+        ok_toAdd = false;
         toggleButton.setChecked(false);
         toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.star_empty));
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -96,7 +105,8 @@ public class StopFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if(checked) {
 
-                    addBusStopToFavourites();
+                    if (ok_toAdd) addBusStopToFavourites();
+                    else ok_toAdd = true;
                     toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.star_full));
                 }
                 else {
@@ -106,6 +116,7 @@ public class StopFragment extends Fragment {
                 }
             }
         });
+        isBusStopInFavorite();
 
         recyclerView_arrivals = root.findViewById(R.id.arrivals_recyclerView);
 
@@ -199,6 +210,35 @@ public class StopFragment extends Fragment {
 
         WriteIE writeIE = new WriteIE();
         writeIE.deleteBusStop(getActivity().getApplicationContext(), busStop.getId());
+    }
+
+    private void isBusStopInFavorite() {
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://pad-proyectofinal-1-default-rtdb.europe-west1.firebasedatabase.app");
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getUid() != null) {
+            databaseReference.child(mAuth.getUid()).child("Favourites").child(busStop.getId())
+                    .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+
+                    if (task.isSuccessful()) {
+
+                        String st = String.valueOf(task.getResult().getValue());
+
+                        if (st.equals("null")) {
+
+                            StopFragment.this.toggleButton.setChecked(false);
+                        }
+                        else {
+                            StopFragment.this.toggleButton.setChecked(true);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     public class LinesLoaderCallBacks implements LoaderManager.LoaderCallbacks<List<BusStop>> {
