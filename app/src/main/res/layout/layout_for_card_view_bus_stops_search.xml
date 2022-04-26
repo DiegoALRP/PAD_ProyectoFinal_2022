@@ -23,7 +23,7 @@
         card_view:cardMaxElevation="4dp"
         card_view:cardPreventCornerOverlap="true"
         card_view:cardUseCompatPadding="true"
-        card_view:contentPadding="20dp">
+        card_view:contentPadding="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -64,13 +64,26 @@
 
             <TextView
                 android:id="@+id/searchBusStop_busStopLines_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="32dp"
                 android:text="12, 13, 14"
                 android:textColor="@color/blue"
                 card_view:layout_constraintBaseline_toBaselineOf="@+id/textView8"
+                card_view:layout_constraintEnd_toStartOf="@+id/imageView"
                 card_view:layout_constraintStart_toEndOf="@+id/textView8" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/searchBusStop_busStopID_textView"
+                card_view:srcCompat="@drawable/bus_stop" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

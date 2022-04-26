@@ -61,10 +61,11 @@ public class BusStopResultListAdapter extends RecyclerView.Adapter<BusStopResult
 
         String busStopName = "";
         String busStopID = "";
+        String busStopNumber = "N. ";
         String busStopLines = "aa";
 
         busStopName = busStopList.get(position).getName();
-        busStopID = busStopList.get(position).getId();
+        busStopID = busStopNumber + busStopList.get(position).getId();
         ArrayList<String> linesList = (ArrayList<String>) busStopList.get(position).getLines();
         int linesSize = linesList.size();
         StringBuilder stringBuilder = new StringBuilder();
