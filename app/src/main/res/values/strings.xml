@@ -1,12 +1,19 @@
 <resources>
     <string name="app_name">EmtntR</string>
     <string name="title_activity_nav_">Nav_Activity</string>
-    <string name="title_home">Buscar</string>
-    <string name="title_dashboard">Paradas</string>
-    <string name="title_notifications">Mapa</string>
+    <string name="title_home">Search</string>
+    <string name="title_dashboard">Favorites</string>
+    <string name="title_notifications">Map</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="favourite_change_name">Your name of the stop</string>
+
+    <!-- LogIn Section -->
+    <string name="login_email_hint">Username / Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_login_button">Login</string>
+    <string name="login_signup_button">Create an account</string>
+    <!-- SignUp Section -->
 
     <!-- Notifications -->
     <string name="lines">Lines:</string>

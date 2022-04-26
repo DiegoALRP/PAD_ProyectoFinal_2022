@@ -13,7 +13,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/border_for_button_login"
-        android:text="LogIn"
+        android:text="@string/login_login_button"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/createAccountButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/border_for_button_signup"
-        android:text="Create an account"
+        android:text="@string/login_signup_button"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,8 +37,8 @@
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="32dp"
         android:foregroundGravity="left"
         android:gravity="left"
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:text="Password"
+            android:text="@string/login_password_hint"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
@@ -72,7 +72,7 @@
                 android:id="@+id/password_input_text_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/login_password_hint"
                 android:inputType="textPassword"
                 android:textColor="@color/dark_gray" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -82,22 +82,22 @@
         android:id="@+id/linearLayoutErr"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
-            android:text="Username/Email"
+            android:text="@string/login_email_hint"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
@@ -112,30 +112,36 @@
                 android:id="@+id/email_input_text_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username / Email"
-                android:textColor="@color/dark_gray"
+                android:hint="@string/login_email_hint"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/app_logo" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/apps_name" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/app_logo" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/apps_name" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
