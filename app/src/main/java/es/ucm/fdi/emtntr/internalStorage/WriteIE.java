@@ -2,9 +2,12 @@ package es.ucm.fdi.emtntr.internalStorage;
 
 import android.content.Context;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 
 public class WriteIE {
 
@@ -18,7 +21,18 @@ public class WriteIE {
 
             File file = new File(context.getFilesDir(), filename);
             FileOutputStream fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(data.getBytes());
+
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) { //API 19
+                outputStreamWriter = new OutputStreamWriter(fileOutputStream, StandardCharsets.ISO_8859_1);
+            }
+
+            BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+
+            bufferedWriter.write(data);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+
             fileOutputStream.flush();
             fileOutputStream.close();
 

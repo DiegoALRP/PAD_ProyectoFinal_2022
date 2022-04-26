@@ -37,9 +37,8 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView_busStopsList = root.findViewById(R.id.search_home_recyclerView_BusStopList);
 
@@ -82,8 +81,6 @@ public class HomeFragment extends Fragment {
     }
 
     public void updateBusStopResultList(List<BusStop> busStopInfoList) {
-
-        //Toast.makeText(getContext(), "Act", Toast.LENGTH_SHORT).show();
 
         busStopResultListAdapter.setBusStopData(busStopInfoList);
         busStopResultListAdapter.notifyDataSetChanged();
