@@ -16,9 +16,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/border_for_layout"
+        android:background="@drawable/border_rectange_for_card_view"
         card_view:cardBackgroundColor="@color/white"
-        card_view:cardCornerRadius="4dp"
+        card_view:cardCornerRadius="6dp"
+        card_view:cardElevation="4dp"
+        card_view:cardMaxElevation="4dp"
+        card_view:cardPreventCornerOverlap="true"
+        card_view:cardUseCompatPadding="true"
         card_view:contentPadding="20dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

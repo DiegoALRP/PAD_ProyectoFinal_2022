@@ -114,6 +114,7 @@
                 android:id="@+id/email_input_text_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
                 android:hint="@string/login_email_hint"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>

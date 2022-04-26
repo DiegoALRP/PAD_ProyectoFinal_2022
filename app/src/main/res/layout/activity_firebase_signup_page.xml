@@ -41,6 +41,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        app:helperText="@string/signup_email_layout_required"
+        app:helperTextTextColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -51,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/signup_email_hint"
+            android:inputType="textEmailAddress"
             android:textColor="@color/dark_gray"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -65,7 +68,7 @@
         android:layout_marginEnd="16dp"
         app:counterEnabled="true"
         app:endIconMode="password_toggle"
-        app:helperText="* Required length 6"
+        app:helperText="@string/signup_password_layout_required"
         app:helperTextTextColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,6 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/signup_name_hint"
+            android:inputType="textPersonName"
             android:textColor="@color/dark_gray"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>

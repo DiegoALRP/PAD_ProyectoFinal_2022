@@ -21,6 +21,8 @@
     <string name="signup_name_hint">Name</string>
     <string name="signup_email_hint">Username / Email</string>
     <string name="signup_password_hint">Password</string>
+    <string name="signup_email_layout_required">* Required</string>
+    <string name="signup_password_layout_required">* Required at least 6 characters</string>
 
     <!-- Notifications -->
     <string name="lines">Lines:</string>
