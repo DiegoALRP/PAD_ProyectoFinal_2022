@@ -24,6 +24,20 @@
     <string name="signup_email_layout_required">* Required</string>
     <string name="signup_password_layout_required">* Required at least 6 characters</string>
 
+    <!-- Search Section -->
+    <string name="search_busStop_default_name">Default Stop Name</string>
+    <string name="search_busStop_default_id">N. 1234</string>
+    <string name="search_busStop_default_lines">12, 13, 14</string>
+    <string name="search_busStop_image_contentDescription">Bus Stop</string>
+
+    <!-- Favourites Section -->
+    <string name="favourite_busStop_default_name">Default Stop Name</string>
+    <string name="favourite_busStop_default_id">N. 1234</string>
+    <string name="favourite_busStop_default_lines">12, 13, 14</string>
+    <string name="favourite_busStop_image_contentDescription">Bus Stop</string>
+    <string name="favourite_busStop_realName_hint">Real Name:</string>
+    <string name="favourite_busStop_realName_default">Some Real Name</string>
+
     <!-- Notifications -->
     <string name="lines">Lines:</string>
     <string name="timeButton">Time</string>
