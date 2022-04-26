@@ -216,7 +216,7 @@ public class EMTApi {
 
         if (res.getCode().equals("00")) {
 
-            return new Response<>(res.getCode(), res.getMessage(), BusStop.fromBasicToList(res.getData()));
+            return new Response<>(res.getCode(), res.getMessage(), BusStop.fromBasicToInfo(res.getData()));
         }
         else {
             return new Response<>(res.getCode(), res.getMessage());

@@ -140,6 +140,47 @@ public class BusStop implements Parcelable {
         return busStopInfoList;
     }
 
+    public static List<BusStop> fromBasicToInfo(JSONArray jsonArray) {
+
+        List<BusStop> busStopInfoList = new ArrayList<>();
+        ArrayList<String> linesNumbers = new ArrayList<>();
+        String busStopID = "";
+        String busStopName = "";
+        LatLng latLng = null;
+
+        Gson gson = new Gson();
+        ArrayList<LinkedTreeMap<String, Object>> busStopList = gson.fromJson(String.valueOf(jsonArray), ArrayList.class);
+        for (LinkedTreeMap<String, Object> busStop: busStopList) {
+
+            ArrayList<LinkedTreeMap<String, Object>> stopS = (ArrayList<LinkedTreeMap<String, Object>>) busStop.get("stops");
+
+            for (LinkedTreeMap<String, Object> stop: stopS) {
+
+
+                busStopID = String.valueOf(stop.get("stop"));
+                busStopName = String.valueOf(stop.get("name"));
+                ArrayList<LinkedTreeMap<String, Object>> lines = (ArrayList<LinkedTreeMap<String, Object>>) stop.get("dataLine");
+                for (int i = 0; i < lines.size(); i++) {
+
+                    LinkedTreeMap<String, Object> lineInfo = lines.get(i);
+                    String line = (String) lineInfo.get("line");
+                    linesNumbers.add(line);
+                }
+
+                LinkedTreeMap<String, ArrayList<Double>> geo = (LinkedTreeMap<String, ArrayList<Double>>) stop.get("geometry");
+                ArrayList<Double> coordinates = geo.get("coordinates");
+                latLng = new LatLng(coordinates.get(0), coordinates.get(1));
+            }
+
+            BusStop busStopInfo = new BusStop(busStopID, busStopName, latLng, linesNumbers);
+
+            busStopInfoList.add(busStopInfo);
+        }
+
+        return busStopInfoList;
+    }
+
+
     public String getId() {
         return id;
     }

@@ -10,10 +10,19 @@ public class FavouriteBusInfo {
     private String stopBusName;
     private String stopBusId;
     private LatLng coordinates;
-    private ArrayList<String> busLines;
+    private String busLines;
 
-    private FavouriteBusInfo() {
+    public FavouriteBusInfo() {
 
+    }
+
+    public FavouriteBusInfo(String user_stopBusName, String stopBusName, String stopBusId, LatLng coordinates, String busLines) {
+
+        this.user_stopBusName = user_stopBusName;
+        this.stopBusName = stopBusName;
+        this.stopBusId = stopBusId;
+        this.coordinates = coordinates;
+        this.busLines = busLines;
     }
 
     public String getUser_stopBusName() {
@@ -46,13 +55,5 @@ public class FavouriteBusInfo {
 
     public void setCoordinates(LatLng coordinates) {
         this.coordinates = coordinates;
-    }
-
-    public ArrayList<String> getBusLines() {
-        return busLines;
-    }
-
-    public void setBusLines(ArrayList<String> busLines) {
-        this.busLines = busLines;
     }
 }

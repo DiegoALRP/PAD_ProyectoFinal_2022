@@ -49,8 +49,16 @@ public class BusStopLoader extends AsyncTaskLoader<List<BusStop>> {
         EMTApi emtApi = new EMTApi();
         List<BusStop> response = new ArrayList<>();
         try {
-            Response<List<BusStop>> busStop = emtApi.getBusStopsList();
-            response = busStop.getData();
+
+            switch (operation) {
+                case BUS_STOP_LIST:
+                    Response<List<BusStop>> busStopList = emtApi.getBusStopsList();
+                    response = busStopList.getData();
+                    break;
+                case BUS_STOP_INFO:
+                    Response<List<BusStop>> busStop = emtApi.getBusStopInfo(busStopID);
+                    response = busStop.getData();
+            }
             //response = emtApi.getBusStopsList();
         } catch (JSONException e) {
             e.printStackTrace();

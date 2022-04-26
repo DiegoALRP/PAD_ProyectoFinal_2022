@@ -31,8 +31,10 @@ import java.util.Map;
 import es.ucm.fdi.emtntr.R;
 import es.ucm.fdi.emtntr.StopArrives.ArrivalListAdapter;
 import es.ucm.fdi.emtntr.StopArrives.AsyncAdaptableLoader;
+import es.ucm.fdi.emtntr.internalStorage.WriteIE;
 import es.ucm.fdi.emtntr.model.Arrival;
 import es.ucm.fdi.emtntr.model.BusStop;
+import es.ucm.fdi.emtntr.stopSearch.BusStopLoader;
 import es.ucm.fdi.emtntr.stopSearch.BusStopResultListAdapter;
 
 /**
@@ -179,8 +181,8 @@ public class StopFragment extends Fragment {
 
     private void addLinesInfo(ArrayList<BusStop> data) {
 
-        ArrayList<BusStop> prueba = new ArrayList<>();
-        prueba = new ArrayList<>(data);
+        WriteIE writeIE = new WriteIE();
+        writeIE.writeFavouriteBusStop(getActivity().getApplicationContext(), data);
     }
 
     private void deleteBusStopFromFavourites() {
@@ -197,13 +199,11 @@ public class StopFragment extends Fragment {
         @NonNull
         @NotNull
         @Override
-        public AsyncAdaptableLoader<List<BusStop>> onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
+        public BusStopLoader onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
 
-            String[] loaderArgs = new String[]{String.valueOf(busStop.getId())};
-            AsyncAdaptableLoader<List<BusStop>> arrivalsLoader =
-                    new AsyncAdaptableLoader<List<BusStop>>(context, loaderArgs, AsyncAdaptableLoader.LoaderSelector.STOP_INFO);
+            BusStopLoader busStopLoader = new BusStopLoader(context, busStop.getId(), BusStopLoader.Operation.BUS_STOP_INFO);
 
-            return arrivalsLoader;
+            return busStopLoader;
         }
 
         @Override

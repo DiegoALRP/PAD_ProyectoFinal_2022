@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment {
         @Override
         public BusStopLoader onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
 
-            BusStopLoader busStopLoader = new BusStopLoader(context, "");
+            BusStopLoader busStopLoader = new BusStopLoader(context, "", BusStopLoader.Operation.BUS_STOP_LIST);
 
             return busStopLoader;
         }
