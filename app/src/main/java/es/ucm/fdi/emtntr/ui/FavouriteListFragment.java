@@ -26,13 +26,13 @@ public class FavouriteListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_favorites, container, false);
-        Button button_1 = root.findViewById(R.id.button);
+        /*Button button_1 = root.findViewById(R.id.button);
         button_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 button_test(v);
             }
-        });
+        });*/
 
         return root;
     }

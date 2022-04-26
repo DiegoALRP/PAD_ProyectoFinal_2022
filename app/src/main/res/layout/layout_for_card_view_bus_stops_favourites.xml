@@ -84,7 +84,7 @@
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/favouriteBusStop_busStopID_textView"
-                card_view:srcCompat="@drawable/bus_stop" />
+                card_view:srcCompat="@drawable/settings_icon" />
 
             <TextView
                 android:id="@+id/textView3"

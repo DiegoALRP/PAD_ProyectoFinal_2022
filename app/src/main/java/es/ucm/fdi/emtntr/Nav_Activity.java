@@ -1,5 +1,6 @@
 package es.ucm.fdi.emtntr;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -30,6 +31,11 @@ public class Nav_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_nav);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnItemSelectedListener(navListener);
+
+        Resources resources = getResources();
+        getSupportActionBar().setTitle(resources.getString(R.string.search_fragment_name));
+        getSupportActionBar().setIcon(R.drawable.app_logo);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -48,20 +54,28 @@ public class Nav_Activity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
 
             Fragment selectedFragment = null;
+            Resources resources = getResources();
+            String title = resources.getString(R.string.default_fragment_name);
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     selectedFragment = new HomeFragment();
+                    title = resources.getString(R.string.search_fragment_name);
                     break;
                 case R.id.navigation_dashboard:
                     selectedFragment = new FavouriteListFragment();
+                    title = resources.getString(R.string.favourites_fragment_name);
                     break;
                 case R.id.navigation_notifications:
                     selectedFragment = new MapFragment();
+                    title = resources.getString(R.string.map_fragment_name);
                     break;
             }
 
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();
+            getSupportActionBar().setTitle(title);
+            //getSupportActionBar().setIcon(R.drawable.app_logo);
+            //getActionBar().setIcon(R.drawable.app_logo);
 
             return true;
         }

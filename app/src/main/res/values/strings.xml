@@ -58,4 +58,10 @@
     <string name="avisame">Avísame: </string>
     <string name="times">1 min, 12 min</string>
     <string name="toggleButton"> </string>
+
+    <!-- Action Bar Names -->
+    <string name="search_fragment_name">Search</string>
+    <string name="favourites_fragment_name">Favourites</string>
+    <string name="map_fragment_name">Map</string>
+    <string name="default_fragment_name">EMTnt</string>
 </resources>

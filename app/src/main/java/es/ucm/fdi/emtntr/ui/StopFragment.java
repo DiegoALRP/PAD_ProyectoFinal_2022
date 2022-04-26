@@ -90,19 +90,19 @@ public class StopFragment extends Fragment {
         txtv2.setText("Número: " + busStop.getId());
 
         toggleButton.setChecked(false);
-        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star_empty));
+        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.star_empty));
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if(checked) {
 
                     addBusStopToFavourites();
-                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star));
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.star_full));
                 }
                 else {
 
                     deleteBusStopFromFavourites();
-                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star_empty));
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.star_empty));
                 }
             }
         });
@@ -176,16 +176,16 @@ public class StopFragment extends Fragment {
     //Favourites Section
     private void addBusStopToFavourites() {
 
+        Resources resources = getResources();
+        String st = resources.getString(R.string.favourite_alert_favouriteAdded);
+        Toast.makeText(getContext(), st, Toast.LENGTH_LONG).show();
+
         LinesLoaderCallBacks linesLoaderCallBacks = new LinesLoaderCallBacks(getContext());
 
         LoaderManager.getInstance(this).restartLoader(1, new Bundle(), linesLoaderCallBacks);
     }
 
     private void addLinesInfo(ArrayList<BusStop> data) {
-
-        Resources resources = getResources();
-        String st = resources.getString(R.string.favourite_alert_favouriteAdded);
-        Toast.makeText(getContext(), st, Toast.LENGTH_LONG).show();
 
         WriteIE writeIE = new WriteIE();
         writeIE.addAndWriteBusStopToFavourites(getActivity().getApplicationContext(), data);
