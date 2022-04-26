@@ -37,8 +37,8 @@
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:foregroundGravity="left"
         android:gravity="left"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             app:counterEnabled="true"
             app:endIconMode="password_toggle"
-            app:helperText="* Required length 6"
+            app:helperText="@string/login_password_layout_required"
             app:helperTextTextColor="@color/red"
             app:startIconDrawable="@android:drawable/ic_lock_lock">
 
@@ -82,9 +82,9 @@
         android:id="@+id/linearLayoutErr"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
@@ -106,6 +106,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:helperText="@string/login_email_layout_required"
+            app:helperTextTextColor="@color/red"
             app:startIconDrawable="@android:drawable/ic_dialog_email">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -122,7 +124,6 @@
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"

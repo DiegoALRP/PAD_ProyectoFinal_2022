@@ -13,7 +13,14 @@
     <string name="login_password_hint">Password</string>
     <string name="login_login_button">Login</string>
     <string name="login_signup_button">Create an account</string>
+    <string name="login_email_layout_required">* Required</string>
+    <string name="login_password_layout_required">* Required at least 6 characters</string>
     <!-- SignUp Section -->
+    <string name="signup_signup_button">Sign Up</string>
+    <string name="signup_back_button">Back</string>
+    <string name="signup_name_hint">Name</string>
+    <string name="signup_email_hint">Username / Email</string>
+    <string name="signup_password_hint">Password</string>
 
     <!-- Notifications -->
     <string name="lines">Lines:</string>
