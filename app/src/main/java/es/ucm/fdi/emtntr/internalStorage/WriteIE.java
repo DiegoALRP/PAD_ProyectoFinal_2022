@@ -2,6 +2,8 @@ package es.ucm.fdi.emtntr.internalStorage;
 
 import android.content.Context;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
@@ -17,6 +19,8 @@ import es.ucm.fdi.emtntr.model.BusStop;
 
 public class WriteIE {
 
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
     private final String filenameFav = "FavouritesBusStopList.json";
 
     public WriteIE() {
@@ -69,5 +73,11 @@ public class WriteIE {
         String data = gson.toJson(favouriteBusInfo);
 
         write(context, filenameFav, data);
+    }
+
+    public void readAndModifyFile(Context context, String filename, FavouriteBusInfo favouriteBusInfo) {
+
+        firebaseDatabase = FirebaseDatabase.getInstance("https://macularehab-default-rtdb.europe-west1.firebasedatabase.app");
+        databaseReference = firebaseDatabase.getReference();
     }
 }
