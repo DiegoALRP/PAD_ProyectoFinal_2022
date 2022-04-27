@@ -46,7 +46,7 @@ public class FavouriteListFragment extends Fragment {
         databaseReference = firebaseDatabase.getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        View root = inflater.inflate(R.layout.fragment_favorites, container, false);
+        View root = inflater.inflate(R.layout.fragment_favorite_list, container, false);
         /*Button button_1 = root.findViewById(R.id.button);
         button_1.setOnClickListener(new View.OnClickListener() {
             @Override

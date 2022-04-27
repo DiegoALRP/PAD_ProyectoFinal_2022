@@ -71,11 +71,11 @@
                 android:text="@string/search_busStop_default_lines"
                 android:textColor="@color/blue"
                 card_view:layout_constraintBaseline_toBaselineOf="@+id/textView8"
-                card_view:layout_constraintEnd_toStartOf="@+id/imageView"
+                card_view:layout_constraintEnd_toStartOf="@+id/favourites_configuration_imageView"
                 card_view:layout_constraintStart_toEndOf="@+id/textView8" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/favourites_configuration_imageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"

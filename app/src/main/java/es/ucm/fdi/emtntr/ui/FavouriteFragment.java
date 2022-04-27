@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -24,8 +23,6 @@ import java.util.Locale;
 import es.ucm.fdi.emtntr.R;
 import es.ucm.fdi.emtntr.model.BusStop;
 import es.ucm.fdi.emtntr.notifications.Notification;
-
-import static androidx.core.content.ContextCompat.getSystemService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,7 +85,7 @@ public class FavouriteFragment extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View root =  inflater.inflate(R.layout.fragment_favourite, container, false);
+        View root =  inflater.inflate(R.layout.fragment_favourite_configuration, container, false);
         timeButton = root.findViewById(R.id.clock);
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override

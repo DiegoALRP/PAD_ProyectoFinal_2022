@@ -1,6 +1,7 @@
 package es.ucm.fdi.emtntr.internalStorage;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import es.ucm.fdi.emtntr.favorites.FavouriteBusInfo;
+import es.ucm.fdi.emtntr.firebase.SignUp;
 import es.ucm.fdi.emtntr.model.BusStop;
 
 public class WriteIE {
@@ -113,6 +115,9 @@ public class WriteIE {
                             write(context, filename, data);
                         }
                     }
+                    else {
+                        Toast.makeText(context, task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
@@ -143,6 +148,9 @@ public class WriteIE {
                             String data = gson.toJson(map);
                             write(context, filenameFav, data);
                         }
+                    }
+                    else {
+                        Toast.makeText(context, task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             });
