@@ -3,15 +3,16 @@
     <style name="Theme.EMTnt" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/black</item>
-        <item name="colorSecondaryVariant">@color/black</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/black_light</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

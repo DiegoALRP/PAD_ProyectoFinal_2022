@@ -187,9 +187,11 @@ public class StopFragment extends Fragment {
     //Favourites Section
     private void addBusStopToFavourites() {
 
-        Resources resources = getResources();
-        String st = resources.getString(R.string.favourite_alert_favouriteAdded);
-        Toast.makeText(getContext(), st, Toast.LENGTH_LONG).show();
+        if (ok_toAdd) {
+            Resources resources = getContext().getResources();
+            String st = resources.getString(R.string.favourite_alert_favouriteAdded);
+            Toast.makeText(getContext(), st, Toast.LENGTH_LONG).show();
+        }
 
         LinesLoaderCallBacks linesLoaderCallBacks = new LinesLoaderCallBacks(getContext());
 
@@ -204,7 +206,7 @@ public class StopFragment extends Fragment {
 
     private void deleteBusStopFromFavourites() {
 
-        Resources resources = getResources();
+        Resources resources = getContext().getResources();
         String st = resources.getString(R.string.favourite_alert_favouriteDeleted);
         Toast.makeText(getContext(), st, Toast.LENGTH_LONG).show();
 
@@ -224,6 +226,7 @@ public class StopFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
 
+                    ok_toAdd = true;
                     if (task.isSuccessful()) {
 
                         String st = String.valueOf(task.getResult().getValue());

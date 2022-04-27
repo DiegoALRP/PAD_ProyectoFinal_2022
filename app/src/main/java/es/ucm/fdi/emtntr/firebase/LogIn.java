@@ -125,7 +125,6 @@ public class LogIn extends AppCompatActivity {
         else {
             logInUser(user_email, user_password);
         }
-
     }
 
     private void createAccountButtonClicked() {

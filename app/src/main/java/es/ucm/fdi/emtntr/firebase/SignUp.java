@@ -27,6 +27,9 @@ public class SignUp extends AppCompatActivity {
     private TextInputEditText name_input;
     private TextInputEditText email_input;
     private TextInputEditText password_input;
+    private String name;
+    private String email;
+    private String password;
 
     private final String TAG = "AuthEmailAndPassword";
 
@@ -41,22 +44,53 @@ public class SignUp extends AppCompatActivity {
         email_input = findViewById(R.id.signUp_email_input_text_field);
         password_input = findViewById(R.id.signUp_password_input_text_field);
 
-        Button login_button = findViewById(R.id.singUp_button);
-        login_button.setOnClickListener(new View.OnClickListener() {
+        Button signup_button = findViewById(R.id.singUp_button);
+        signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signUpButtonClicked();
+            }
+        });
+
+        Button backButton = findViewById(R.id.signup_backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
 
     private void signUpButtonClicked() {
 
-        String name = String.valueOf(name_input.getText());
-        String email = String.valueOf(email_input.getText());
-        String password = String.valueOf(password_input.getText());
+        name = String.valueOf(name_input.getText());
+        email = String.valueOf(email_input.getText());
+        password = String.valueOf(password_input.getText());
 
         createNewUserEmailAndPassword(email, password);
+    }
+
+    private void verifyInput() {
+
+        boolean is_ok = true;
+        String error = "";
+
+        if (email.equals("")) {
+            is_ok = false;
+            error = "email is empty";
+        }
+        if (password.equals("")) {
+            is_ok = false;
+            error = "password field is empty";
+        }
+
+        if (!is_ok) {
+            showAlertErrorUser(error);
+        }
+        else {
+            logInUser(user_email, user_password);
+        }
+
     }
 
     public void createNewUserEmailAndPassword(String email, String password) {
