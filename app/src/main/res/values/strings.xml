@@ -36,6 +36,7 @@
     <string name="search_busStop_default_id">N. 1234</string>
     <string name="search_busStop_default_lines">12, 13, 14</string>
     <string name="search_busStop_image_contentDescription">Bus Stop</string>
+    <string name="search_busStop_query_hint">Bus Stop\'s Number</string>
 
     <!-- Favourites Section -->
     <string name="favourite_busStop_default_name">Default Stop Name</string>
