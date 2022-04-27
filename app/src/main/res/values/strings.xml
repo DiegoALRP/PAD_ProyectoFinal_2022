@@ -15,6 +15,9 @@
     <string name="login_signup_button">Create an account</string>
     <string name="login_email_layout_required">* Required</string>
     <string name="login_password_layout_required">* Required at least 6 characters</string>
+    <string name="login_password_error">"Password" field is required to fill up</string>
+    <string name="login_email_error">"Email" field is required to fill up</string>
+    <string name="login_logInSuccessful">Welcome!</string>
     <!-- SignUp Section -->
     <string name="signup_signup_button">Sign Up</string>
     <string name="signup_back_button">Back</string>
@@ -23,6 +26,10 @@
     <string name="signup_password_hint">Password</string>
     <string name="signup_email_layout_required">* Required</string>
     <string name="signup_password_layout_required">* Required at least 6 characters</string>
+    <string name="signup_password_error">"Password" field is required to fill up</string>
+    <string name="signup_email_error">"Email" field is required to fill up</string>
+    <string name="signup_name_error">"Name" field is required to fill up</string>
+    <string name="signup_userCreated_text">User created!</string>
 
     <!-- Search Section -->
     <string name="search_busStop_default_name">Default Stop Name</string>

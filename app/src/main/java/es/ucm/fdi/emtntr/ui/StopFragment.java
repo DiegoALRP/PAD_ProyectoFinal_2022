@@ -190,7 +190,7 @@ public class StopFragment extends Fragment {
         if (ok_toAdd) {
             Resources resources = getContext().getResources();
             String st = resources.getString(R.string.favourite_alert_favouriteAdded);
-            Toast.makeText(getContext(), st, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), st, Toast.LENGTH_SHORT).show();
         }
 
         LinesLoaderCallBacks linesLoaderCallBacks = new LinesLoaderCallBacks(getContext());
@@ -208,7 +208,7 @@ public class StopFragment extends Fragment {
 
         Resources resources = getContext().getResources();
         String st = resources.getString(R.string.favourite_alert_favouriteDeleted);
-        Toast.makeText(getContext(), st, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), st, Toast.LENGTH_SHORT).show();
 
         WriteIE writeIE = new WriteIE();
         writeIE.deleteBusStop(getActivity().getApplicationContext(), busStop.getId());
