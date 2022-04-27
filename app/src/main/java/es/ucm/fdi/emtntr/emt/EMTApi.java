@@ -174,7 +174,7 @@ public class EMTApi {
 
         if (res.getCode().equals("00")) {
             try {
-                return new Response<>(res.getCode(), res.getMessage(), BusStop.fromNear(res.getData()));
+                return new Response<>(res.getCode(), res.getMessage(), BusStop.fromNearList(res.getData()));
             } catch (JSONException e) {
                 e.printStackTrace();
                 return new Response<>("1000", e.getMessage());
@@ -195,30 +195,6 @@ public class EMTApi {
                 return new Response<>("1000", e.getMessage());
             }
         } else {
-            return new Response<>(res.getCode(), res.getMessage());
-        }
-    }
-
-    public Response<List<BusStop>> getBusStopsList() throws JSONException {
-        Response<JSONArray> res = apiCall(buildPath("transport/busemtmad/stops/list"), "");
-
-        if (res.getCode().equals("00")) {
-
-            return new Response<>(res.getCode(), res.getMessage(), BusStop.fromBasicToList(res.getData()));
-        }
-        else {
-            return new Response<>(res.getCode(), res.getMessage());
-        }
-    }
-
-    public Response<List<BusStop>> getBusStopInfo(String id) throws JSONException {
-        Response<JSONArray> res = apiCall(buildPath("transport/busemtmad/stops/", id, "detail"));
-
-        if (res.getCode().equals("00")) {
-
-            return new Response<>(res.getCode(), res.getMessage(), BusStop.fromBasicToInfo(res.getData()));
-        }
-        else {
             return new Response<>(res.getCode(), res.getMessage());
         }
     }
