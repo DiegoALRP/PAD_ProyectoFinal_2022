@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import java.util.List;
 import es.ucm.fdi.emtntr.R;
 import es.ucm.fdi.emtntr.model.BusStop;
 import es.ucm.fdi.emtntr.stopSearch.BusStopResultListAdapter;
+import es.ucm.fdi.emtntr.ui.FavouriteFragment;
 import es.ucm.fdi.emtntr.ui.StopFragment;
 
 public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdapter.BusStopViewHolder> implements View.OnClickListener {
@@ -119,6 +121,7 @@ public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdap
         private TextView busStopName;
         private TextView busStopName_user;
         private FavouriteListAdapter adapter;
+        private ImageView configurationImage;
 
         public BusStopViewHolder(View itemView, FavouriteListAdapter adapter) {
             super(itemView);
@@ -127,8 +130,27 @@ public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdap
             busStopID = itemView.findViewById(R.id.favouriteBusStop_busStopID_textView);
             busStopLines = itemView.findViewById(R.id.favouriteBusStop_busStopLines_textView);
             busStopName_user = itemView.findViewById(R.id.favouriteBusStop_userBusStopName_textView);
+            configurationImage = itemView.findViewById(R.id.favourites_configuration_imageView);
+
+            configurationImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goToConfFragment();
+                }
+            });
 
             this.adapter = adapter;
+        }
+
+        private void goToConfFragment() {
+
+            FragmentManager fragmentManager = FavouriteListAdapter.this.parentFragment;
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setReorderingAllowed(true);
+
+            transaction.replace(R.id.nav_host_fragment, FavouriteFragment.newInstance("a","A"), null);
+
+            transaction.commit();
         }
 
         public void onClickModified(View v, FavouriteBusInfo busStop) {
