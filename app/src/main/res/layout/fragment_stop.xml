@@ -13,6 +13,7 @@
         android:layout_marginStart="44dp"
         android:layout_marginEnd="16dp"
         android:text="TextView"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/toggleButton"
         app:layout_constraintHorizontal_bias="0.01"

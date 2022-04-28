@@ -30,23 +30,23 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/searchBusStop_busStopName_textView"
+                android:id="@+id/favouriteBusStop_userBusStopName_textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
-                android:text="@string/search_busStop_default_name"
+                android:text="@string/favourite_busStop_default_name"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                card_view:layout_constraintEnd_toStartOf="@+id/searchBusStop_busStopID_textView"
+                card_view:layout_constraintEnd_toStartOf="@+id/favouriteBusStop_busStopID_textView"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/searchBusStop_busStopID_textView"
+                android:id="@+id/favouriteBusStop_busStopID_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="@string/search_busStop_default_id"
+                android:text="@string/favourite_busStop_default_id"
                 android:textColor="@android:color/holo_blue_dark"
                 android:textSize="16sp"
                 card_view:layout_constraintEnd_toEndOf="parent"
@@ -60,15 +60,15 @@
                 android:text="@string/lines"
                 android:textColor="@color/blue"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/searchBusStop_busStopName_textView" />
+                card_view:layout_constraintTop_toBottomOf="@+id/favouriteBusStop_userBusStopName_textView" />
 
             <TextView
-                android:id="@+id/searchBusStop_busStopLines_textView"
+                android:id="@+id/favouriteBusStop_busStopLines_textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="32dp"
-                android:text="@string/search_busStop_default_lines"
+                android:text="@string/favourite_busStop_default_lines"
                 android:textColor="@color/blue"
                 card_view:layout_constraintBaseline_toBaselineOf="@+id/textView8"
                 card_view:layout_constraintEnd_toStartOf="@+id/favourites_configuration_imageView"
@@ -83,8 +83,29 @@
                 android:contentDescription="@string/search_busStop_image_contentDescription"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/searchBusStop_busStopID_textView"
-                card_view:srcCompat="@drawable/bus_stop" />
+                card_view:layout_constraintTop_toBottomOf="@+id/favouriteBusStop_busStopID_textView"
+                card_view:srcCompat="@drawable/settings_icon" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/favourite_busStop_realName_hint"
+                android:textSize="16sp"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/favouriteBusStop_busStopLines_textView" />
+
+            <TextView
+                android:id="@+id/favouriteBusStop_busStopName_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="32dp"
+                android:text="@string/favourite_busStop_realName_default"
+                card_view:layout_constraintBaseline_toBaselineOf="@+id/textView3"
+                card_view:layout_constraintEnd_toStartOf="@+id/favourites_configuration_imageView"
+                card_view:layout_constraintStart_toEndOf="@+id/textView3" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

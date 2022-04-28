@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +17,14 @@ import es.ucm.fdi.emtntr.model.BusStop;
 
 public class BusStopLoader extends AsyncTaskLoader<List<BusStop>> {
 
-    private String busStopID;
+    private final String busStopID;
+    private final Operation operation;
 
-    public BusStopLoader(@NonNull @NotNull Context context, String busStopID) {
+    public BusStopLoader(@NonNull @NotNull Context context, String busStopID, Operation operation) {
 
         super(context);
         this.busStopID = busStopID;
+        this.operation = operation;
     }
 
     @Nullable
@@ -46,14 +47,21 @@ public class BusStopLoader extends AsyncTaskLoader<List<BusStop>> {
 
         EMTApi emtApi = new EMTApi();
         List<BusStop> response = new ArrayList<>();
-        try {
-            Response<List<BusStop>> busStop = emtApi.getBusStopsList();
-            response = busStop.getData();
-            //response = emtApi.getBusStopsList();
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+        switch (operation) {
+            case BUS_STOP_LIST:
+                Response<List<BusStop>> busStopList = emtApi.getStopLocations();
+                response = busStopList.getData();
+                break;
+            case BUS_STOP_INFO:
+                response.add(emtApi.getStopDetails(busStopID).getData());
         }
 
         return response;
+    }
+
+    public enum Operation {
+        BUS_STOP_LIST,
+        BUS_STOP_INFO
     }
 }

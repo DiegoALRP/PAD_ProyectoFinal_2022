@@ -40,7 +40,6 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
         recyclerView_busStopsList = root.findViewById(R.id.search_home_recyclerView_BusStopList);
 
         busStopLoaderCallBacks = new BusStopLoaderCallBacks(root.getContext());
@@ -76,9 +75,12 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    public void updateBusStopResultList(List<BusStop> busStopInfoList) {
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
-        //Toast.makeText(getContext(), "Act", Toast.LENGTH_SHORT).show();
+    public void updateBusStopResultList(List<BusStop> busStopInfoList) {
 
         busStopResultListAdapter.setBusStopData(busStopInfoList);
         busStopResultListAdapter.notifyDataSetChanged();
@@ -110,7 +112,7 @@ public class HomeFragment extends Fragment {
         @Override
         public BusStopLoader onCreateLoader(int id, @Nullable @org.jetbrains.annotations.Nullable Bundle args) {
 
-            BusStopLoader busStopLoader = new BusStopLoader(context, "");
+            BusStopLoader busStopLoader = new BusStopLoader(context, "", BusStopLoader.Operation.BUS_STOP_LIST);
 
             return busStopLoader;
         }

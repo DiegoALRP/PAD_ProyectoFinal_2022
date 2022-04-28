@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="es.ucm.fdi.emtntr.ui.DashboardFragment"
+        android:name="es.ucm.fdi.emtntr.ui.FavouriteListFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorite_list" />
 
     <fragment
         android:id="@+id/navigation_notifications"

@@ -4,8 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +17,7 @@ public class BusStop implements Parcelable {
     private final String id;
     private final String name;
     private final LatLng coords;
-    private ArrayList<String> linesList;
+    private List<String> lines;
 
     public BusStop(String id, String name, LatLng coords) {
         this.id = id;
@@ -27,11 +25,11 @@ public class BusStop implements Parcelable {
         this.coords = coords;
     }
 
-    public BusStop(String id, String name, LatLng coords, ArrayList<String> linesList) {
+    public BusStop(String id, String name, LatLng coords, ArrayList<String> lines) {
         this.id = id;
         this.name = name;
         this.coords = coords;
-        this.linesList = linesList;
+        this.lines = lines;
     }
 
     protected BusStop(Parcel in) {
@@ -59,10 +57,19 @@ public class BusStop implements Parcelable {
         String name = json.getString("name");
         LatLng ll = new LatLng(coords.getDouble(1), coords.getDouble(0));
         BusStop stop = new BusStop(id, name, ll);
+
+        JSONArray lineData = json.getJSONArray("dataLine");
+        List<String> lines = new ArrayList<>();
+
+        for (int i = 0; i < lineData.length(); i++) {
+            lines.add(lineData.getJSONObject(i).getString("line"));
+        }
+
+        stop.lines = lines;
         return stop;
     }
 
-    public static BusStop fromDetailsV2(JSONObject json) throws JSONException {
+    public static BusStop fromNear(JSONObject json) throws JSONException {
         JSONArray coords = json.getJSONObject("geometry").getJSONArray("coordinates");
         String id = json.getString("stopId");
         String name = json.getString("stopName");
@@ -71,11 +78,11 @@ public class BusStop implements Parcelable {
         return stop;
     }
 
-    public static List<BusStop> fromNear(JSONArray json) throws JSONException {
+    public static List<BusStop> fromNearList(JSONArray json) throws JSONException {
         List<BusStop> list = new ArrayList<>();
 
         for (int i = 0; i < json.length(); i++) {
-            list.add(fromDetailsV2(json.getJSONObject(i)));
+            list.add(fromNear(json.getJSONObject(i)));
         }
         return list;
     }
@@ -106,38 +113,17 @@ public class BusStop implements Parcelable {
         String name = json.getString("name");
         LatLng ll = new LatLng(coords.getDouble(1), coords.getDouble(0));
         BusStop stop = new BusStop(id, name, ll);
-        return stop;
-    }
 
-    public static List<BusStop> fromBasicToList(JSONArray jsonArray) {
+        JSONArray lineData = json.getJSONArray("lines");
+        List<String> lines = new ArrayList<>();
 
-        List<BusStop> busStopInfoList = new ArrayList<>();
-
-        Gson gson = new Gson();
-        ArrayList<LinkedTreeMap<String, Object>> busStopList = gson.fromJson(String.valueOf(jsonArray), ArrayList.class);
-        for (LinkedTreeMap<String, Object> busStop: busStopList) {
-
-            String busStopID = String.valueOf(busStop.get("node"));
-            String busStopName = String.valueOf(busStop.get("name"));
-            ArrayList<String> lines = (ArrayList<String>) busStop.get("lines");
-            for (int i = 0; i < lines.size(); i++) {
-
-                String line = lines.get(i);
-                String[] valid = line.split("/");
-                line = valid[0];
-                lines.set(i, line);
-            }
-
-            LinkedTreeMap<String, ArrayList<Double>> geo = (LinkedTreeMap<String, ArrayList<Double>>) busStop.get("geometry");
-            ArrayList<Double> coordinates = geo.get("coordinates");
-            LatLng latLng = new LatLng(coordinates.get(0), coordinates.get(1));
-
-            BusStop busStopInfo = new BusStop(busStopID, busStopName, latLng, lines);
-
-            busStopInfoList.add(busStopInfo);
+        for (int i = 0; i < lineData.length(); i++) {
+            lines.add(lineData.getString(i).split("/")[0]);
         }
 
-        return busStopInfoList;
+        stop.lines = lines;
+
+        return stop;
     }
 
     public String getId() {
@@ -153,7 +139,7 @@ public class BusStop implements Parcelable {
     }
 
     public List<String> getLines() {
-        return linesList;
+        return lines;
     }
 
     @Override

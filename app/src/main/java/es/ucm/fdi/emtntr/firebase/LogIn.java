@@ -3,6 +3,7 @@ package es.ucm.fdi.emtntr.firebase;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -108,15 +109,16 @@ public class LogIn extends AppCompatActivity {
     private void verifyInput() {
 
         boolean is_ok = true;
+        Resources resources = this.getResources();
         String error = "";
 
         if (user_email.equals("")) {
             is_ok = false;
-            error = "email is empty";
+            error = resources.getString(R.string.login_email_error);
         }
         if (user_password.equals("")) {
             is_ok = false;
-            error = "password field is empty";
+            error = resources.getString(R.string.login_password_error);
         }
 
         if (!is_ok) {
@@ -125,7 +127,6 @@ public class LogIn extends AppCompatActivity {
         else {
             logInUser(user_email, user_password);
         }
-
     }
 
     private void createAccountButtonClicked() {
@@ -136,6 +137,8 @@ public class LogIn extends AppCompatActivity {
 
     public void logInUser(String email, String password) {
 
+        Resources resources = this.getResources();
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -143,14 +146,16 @@ public class LogIn extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            Toast.makeText(LogIn.this, "User Logged in", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LogIn.this,
+                                    resources.getString(R.string.login_logInSuccessful) + " " + mAuth.getCurrentUser().getDisplayName(),
+                                    Toast.LENGTH_LONG).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             goToMain();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LogIn.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogIn.this, task.getException().getLocalizedMessage(),
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -171,12 +176,8 @@ public class LogIn extends AppCompatActivity {
 
     public void writeInInternalStorage(List<BusStop> busStopInfos) {
 
-        List<BusStop> busStopInfos1 = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            busStopInfos1.add(busStopInfos.get(i));
-        }
         Gson gson = new Gson();
-        String data = gson.toJson(busStopInfos1);
+        String data = gson.toJson(busStopInfos);
 
         WriteIE writeIE = new WriteIE();
         writeIE.write(getApplicationContext(), filename, data);
