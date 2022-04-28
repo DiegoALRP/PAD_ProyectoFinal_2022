@@ -176,12 +176,8 @@ public class LogIn extends AppCompatActivity {
 
     public void writeInInternalStorage(List<BusStop> busStopInfos) {
 
-        List<BusStop> busStopInfos1 = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            busStopInfos1.add(busStopInfos.get(i));
-        }
         Gson gson = new Gson();
-        String data = gson.toJson(busStopInfos1);
+        String data = gson.toJson(busStopInfos);
 
         WriteIE writeIE = new WriteIE();
         writeIE.write(getApplicationContext(), filename, data);
