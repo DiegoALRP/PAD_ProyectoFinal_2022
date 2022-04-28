@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
@@ -197,6 +198,11 @@ public class FavouriteFragment extends Fragment  {
                }
            }
 
+           Toast.makeText(getContext(),"You set an alarm!", Toast.LENGTH_LONG).show();
+       }
+       else
+       {
+           Toast.makeText(getContext(),"Line doesn't exit on this stop", Toast.LENGTH_LONG).show();
        }
     }
 
