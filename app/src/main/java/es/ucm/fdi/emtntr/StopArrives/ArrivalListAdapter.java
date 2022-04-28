@@ -139,7 +139,7 @@ public class ArrivalListAdapter extends RecyclerView.Adapter<ArrivalListAdapter.
         notificationIntent.putExtra("line", line);
 
         PendingIntent notificationPendingIntent =
-                PendingIntent.getBroadcast(context, notification_id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.getBroadcast(context, notification_id, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
 
         alarmMap.put(line, notificationPendingIntent);
