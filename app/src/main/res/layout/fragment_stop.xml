@@ -24,10 +24,9 @@
         android:id="@+id/txtv2"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtv1" />
 

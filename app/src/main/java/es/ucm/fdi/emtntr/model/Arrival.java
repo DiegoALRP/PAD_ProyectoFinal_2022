@@ -16,7 +16,8 @@ public class Arrival {
     private final int bus;
     private final LatLng coords;
     private final int time;
-    private StringBuilder timesString;
+    private int time2;
+    //private StringBuilder timesString;
     private final int distance;
 
     private Arrival(String line, String dest, int bus, LatLng coords, int time, int distance) {
@@ -25,7 +26,8 @@ public class Arrival {
         this.bus = bus;
         this.coords = coords;
         this.time = time;
-        this.timesString = new StringBuilder();
+        this.time2 = -1;
+        //this.timesString = new StringBuilder();
         this.distance = distance;
     }
 
@@ -71,12 +73,23 @@ public class Arrival {
         return time;
     }
 
+
+    public int getTime2() {
+        return time2;
+    }
+
+    public void setTime2(int t) {
+        time2 = t;
+    }
+
+/*
     public String getTimesString() { return timesString.toString(); }
 
     public void putTimesString(int t) {
         if (timesString.length() != 0)timesString.append(", ");
         timesString.append(t/60).append(" min");
     }
+*/
 
     public int getDistance() {
         return distance;
