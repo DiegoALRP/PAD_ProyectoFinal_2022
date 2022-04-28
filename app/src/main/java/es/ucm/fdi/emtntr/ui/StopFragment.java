@@ -138,21 +138,31 @@ public class StopFragment extends Fragment {
 
         LoaderManager.getInstance(this).restartLoader(0, new Bundle(), arrivalsLoaderCallBacks);
 
-        //Codigo de actualizacion cada 15 segundos
+
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        actualizar();
-                    }
-                }) ;
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            actualizar();
+                        }
+                    });
+                }catch (Exception e){
+
+                }
             }
         };
 
         new Timer().scheduleAtFixedRate(timerTask, UPDATE_TIME, UPDATE_TIME);
         return root;
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     public void actualizar()
