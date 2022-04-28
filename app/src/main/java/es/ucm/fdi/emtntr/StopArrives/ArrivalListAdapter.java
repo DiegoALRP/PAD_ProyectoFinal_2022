@@ -27,6 +27,7 @@ import java.util.Timer;
 
 import es.ucm.fdi.emtntr.R;
 import es.ucm.fdi.emtntr.model.Arrival;
+import es.ucm.fdi.emtntr.notifications.Notification;
 
 public class ArrivalListAdapter extends RecyclerView.Adapter<ArrivalListAdapter.ArrivalsViewHolder> implements View.OnClickListener {
 
@@ -94,8 +95,11 @@ public class ArrivalListAdapter extends RecyclerView.Adapter<ArrivalListAdapter.
         int time1, time2;
         time1 = arrivals.get(position).getTime();
         time2 = arrivals.get(position).getTime2();
-        arrival_times = String.valueOf(time1/60) + "min";
+        if(time1 == 999999) arrival_times = "+45 min ";
+        else arrival_times = String.valueOf(time1/60) + "min";
+        if(time2 == 999999) arrival_times =  arrival_times + ", +45 min ";
         if(time2 >=0)  arrival_times = arrival_times + ", " + String.valueOf(time2/60) + "min";
+
 
         holder.line.setText(line_name);
         holder.times.setText(arrival_times);
@@ -135,17 +139,18 @@ public class ArrivalListAdapter extends RecyclerView.Adapter<ArrivalListAdapter.
         alarm_time = alarm_time-30;
 
 
-        Intent notificationIntent = new Intent(context, NearBusNotifyer.class);
-        notificationIntent.putExtra("line", line);
+        Intent notificationIntent = new Intent(context, Notification.class);
+        notificationIntent.putExtra("LINE_NUMBER", line);
+        notificationIntent.putExtra("BUSSTOP_INFO", " ");
 
         PendingIntent notificationPendingIntent =
-                PendingIntent.getBroadcast(context, notification_id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.getBroadcast(context, notification_id, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
 
         alarmMap.put(line, notificationPendingIntent);
         notification_id++;
 
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+        alarmManager.set(AlarmManager.RTC_WAKEUP,
                 System.currentTimeMillis() + alarm_time * 1000,
                 notificationPendingIntent);
 

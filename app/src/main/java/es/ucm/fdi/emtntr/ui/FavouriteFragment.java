@@ -127,7 +127,7 @@ public class FavouriteFragment extends Fragment  {
         Intent intentNotification = new Intent(getActivity(), Notification.class);
         intentNotification.putExtra("BUSSTOP_INFO", busStop.getName());
         intentNotification.putExtra("LINE_NUMBER", number_of_line_string );
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getActivity().getApplicationContext() ,0, intentNotification, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getActivity().getApplicationContext() ,0, intentNotification, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,timeInMillis,pendingIntent);
         //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeInMillis, 7*AlarmManager.INTERVAL_DAY, pendingIntent);
