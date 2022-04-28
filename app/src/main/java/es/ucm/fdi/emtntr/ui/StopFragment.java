@@ -1,6 +1,9 @@
 package es.ucm.fdi.emtntr.ui;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +15,7 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -27,6 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import es.ucm.fdi.emtntr.R;
 import es.ucm.fdi.emtntr.StopArrives.ArrivalListAdapter;
@@ -43,6 +49,7 @@ import es.ucm.fdi.emtntr.stopSearch.BusStopResultListAdapter;
 public class StopFragment extends Fragment {
 
     private static final String ARG_BUS_STOP = "param1";
+    private static final int UPDATE_TIME = 30000; //miliseconds
     private BusStop busStop;
 
     private TextView txtv1;
@@ -52,11 +59,13 @@ public class StopFragment extends Fragment {
     private ArrivalListAdapter arrivalListAdapter;
     private ArrivalsLoaderCallBacks arrivalsLoaderCallBacks;
 
+    private int id = 0;
+
+
     public StopFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static StopFragment newInstance(BusStop busStop) {
         StopFragment fragment = new StopFragment();
         Bundle args = new Bundle();
@@ -71,6 +80,7 @@ public class StopFragment extends Fragment {
         if (getArguments() != null) {
             this.busStop = (BusStop) getArguments().get(ARG_BUS_STOP);
         }
+
     }
 
     @Override
@@ -105,8 +115,27 @@ public class StopFragment extends Fragment {
 
         LoaderManager.getInstance(this).restartLoader(0, new Bundle(), arrivalsLoaderCallBacks);
 
+        //Codigo de actualizacion cada 15 segundos
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        actualizar();
+                    }
+                }) ;
+            }
+        };
 
+        new Timer().scheduleAtFixedRate(timerTask, UPDATE_TIME, UPDATE_TIME);
         return root;
+    }
+
+    public void actualizar()
+    {
+        LoaderManager.getInstance(this).restartLoader(id, new Bundle(), arrivalsLoaderCallBacks);
+        id++;
     }
 
     public void mostrarLineas(List<Arrival> data)
@@ -115,15 +144,19 @@ public class StopFragment extends Fragment {
 
         Map<String, Arrival> hashMap = new HashMap<>();
         String lineAux="";
-        for(Arrival a: data)
-        {
-            if(hashMap.containsKey(a.getLine())) hashMap.get(a.getLine()).putTimesString(a.getTime());
-            else {
-                a.putTimesString(a.getTime());
-                hashMap.put(a.getLine(), a);
+        if(data != null){
+            for(Arrival a: data)
+            {
+                //Solo incluye el arrival si es mayor que 0
+                if(a.getTime()>0) {
+                    //Si ya hay llegada para la línea, le añade la segunda
+                    if (hashMap.containsKey(a.getLine())) hashMap.get(a.getLine()).setTime2(a.getTime());
+                    else hashMap.put(a.getLine(), a);
+                }
             }
+            data = new ArrayList<>(hashMap.values());
         }
-        data = new ArrayList<>(hashMap.values());
+        if (hashMap.isEmpty()) data = null;
 
         arrivalListAdapter.setData(data);
         arrivalListAdapter.notifyDataSetChanged();
