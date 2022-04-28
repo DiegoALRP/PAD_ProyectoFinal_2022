@@ -25,6 +25,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/number_of_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/favourite_change_name" />
@@ -37,7 +38,7 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="50dp"
-            android:onClick="popTimePicker"
+            android:onClick="test"
             android:text="@string/timeButton"
             android:textSize="48sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +58,7 @@
             app:layout_constraintTop_toBottomOf="@+id/clock">
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/radioButton_M"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -66,7 +67,7 @@
                 android:textSize="34sp" />
 
             <RadioButton
-                android:id="@+id/radioButton4"
+                android:id="@+id/radioButton_T"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -75,7 +76,7 @@
                 android:textSize="34sp" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/radioButton_W"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -84,7 +85,7 @@
                 android:textSize="34sp" />
 
             <RadioButton
-                android:id="@+id/radioButton3"
+                android:id="@+id/radioButton_Th"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -93,7 +94,7 @@
                 android:textSize="34sp" />
 
             <RadioButton
-                android:id="@+id/radioButton5"
+                android:id="@+id/radioButton_F"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -102,7 +103,7 @@
                 android:textSize="34sp" />
 
             <RadioButton
-                android:id="@+id/radioButton6"
+                android:id="@+id/radioButton_S"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -111,7 +112,7 @@
                 android:textSize="34sp" />
 
             <RadioButton
-                android:id="@+id/radioButton7"
+                android:id="@+id/radioButton_Sa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -193,7 +194,7 @@
         </androidx.cardview.widget.CardView>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/Add_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"

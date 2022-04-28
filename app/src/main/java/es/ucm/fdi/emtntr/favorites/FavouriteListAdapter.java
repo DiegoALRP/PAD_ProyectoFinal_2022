@@ -102,6 +102,26 @@ public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdap
                 transaction.commit();
             }
         });
+        holder.configurationImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = FavouriteListAdapter.this.parentFragment;
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setReorderingAllowed(true);
+
+                String name = busStopList.get(position).getStopBusName();
+                String id = busStopList.get(position).getStopBusId();
+                String[] linesAux = busStopList.get(position).getBusLines().split(", ");
+                ArrayList<String> lines = new ArrayList<String>(Arrays.asList(linesAux));
+                LatLng coordinates = busStopList.get(position).getCoordinates();
+
+                BusStop busStop = new BusStop(id, name, coordinates, lines);
+
+                transaction.replace(R.id.nav_host_fragment, FavouriteFragment.newInstance(busStop), null);
+
+                transaction.commit();
+            }
+        });
     }
 
     @Override
@@ -135,7 +155,7 @@ public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdap
             configurationImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    goToConfFragment();
+                    //goToConfFragment();
                 }
             });
 
@@ -148,7 +168,8 @@ public class FavouriteListAdapter extends RecyclerView.Adapter<FavouriteListAdap
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
 
-            transaction.replace(R.id.nav_host_fragment, FavouriteFragment.newInstance("a","A"), null);
+
+            //transaction.replace(R.id.nav_host_fragment, FavouriteFragment.newInstance(), null);
 
             transaction.commit();
         }

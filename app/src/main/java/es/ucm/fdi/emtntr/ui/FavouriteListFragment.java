@@ -110,7 +110,7 @@ public class FavouriteListFragment extends Fragment {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true);
 
-        transaction.replace(R.id.nav_host_fragment, FavouriteFragment.newInstance("a","A"), null);
+        //transaction.replace(R.id.nav_host_fragment, FavouriteFragment.newInstance("a","A"), null);
 
         transaction.commit();
     }
